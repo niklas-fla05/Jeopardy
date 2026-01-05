@@ -1,25 +1,195 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>Jeopardy Host</title>
-    <link rel="stylesheet" href="/assets/host.css">
+<meta charset="UTF-8">
+<title>Jeopardy Host</title>
+<link rel="stylesheet" href="/assets/host.css">
+<script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
 
-<div class="host-container">
+<div class="host-wrapper">
 
-    <h1 class="title">JEOPARDY HOST</h1>
-    <p class="subtitle">Game Control Panel</p>
+    <!-- LEFT PANEL -->
+    <div class="host-controls">
 
-    <div class="controls">
-        <a href="/screen" class="btn">Show Board</a>
-        <a href="/question1" class="btn">Question 1</a>
-        <a href="/question2" class="btn">Question 2</a>
-        <a href="/final" class="btn btn-danger">Final Jeopardy</a>
+        <h1 class="title">JEOPARDY HOST</h1>
+
+        <!-- GAME CONTROLS -->
+        <div class="controls">
+            <button class="btn" onclick="startNewGame()">Neues Game</button>
+            <button class="btn btn-danger" onclick="closeGame()">Game schließen</button>
+        </div>
+
+        <!-- PLAYERS -->
+        <div class="players">
+            <h2>Players</h2>
+            <ul id="playerList"></ul>
+        </div>
+
+        <!-- JSON UPLOAD -->
+        <div class="json-upload">
+            <h2>Board JSON</h2>
+            <input type="file" id="jsonFile" accept=".json">
+            <button class="btn" onclick="uploadJSON()">Upload</button>
+        </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="mini-board">
+        <h2>Board Status</h2>
+        <div id="miniBoard" class="board-grid"></div>
     </div>
 
 </div>
+
+<!-- QUESTION OVERLAY (ZENTRIERT!) -->
+<div id="questionContainer" class="question-overlay">
+
+    <h3 id="qCategory"></h3>
+    <h4 id="qPoints"></h4>
+
+    <p id="qText"></p>
+
+    <p id="qAnswer" class="answer"></p>
+
+    <div class="controls">
+        <button class="btn" onclick="markAnswer(true)">Richtig</button>
+        <button class="btn btn-danger" onclick="markAnswer(false)">Falsch</button>
+        <button class="btn" onclick="resetQuestion()">Zurücksetzen</button>
+    </div>
+
+</div>
+
+<script>
+const socket = io();
+
+let players = [];
+let boardState = [];
+let currentCell = null;
+
+/* ---------------- PLAYERS ---------------- */
+function renderPlayers() {
+    const list = document.getElementById("playerList");
+    list.innerHTML = "";
+
+    players.forEach(p => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <strong>${p.name}</strong> – ${p.score} pts
+            <button onclick="changeScore(${p.id}, 100)">+100</button>
+            <button onclick="changeScore(${p.id}, -100)">-100</button>
+        `;
+        list.appendChild(li);
+    });
+}
+
+function changeScore(id, delta) {
+    socket.emit("updateScore", { playerId: id, delta });
+}
+
+/* ---------------- MINI BOARD ---------------- */
+function renderMiniBoard() {
+    const board = document.getElementById("miniBoard");
+    board.innerHTML = "";
+
+    boardState.forEach(col => {
+        const column = document.createElement("div");
+        column.className = "board-column";
+
+        col.forEach(cell => {
+            const div = document.createElement("div");
+            div.className = "mini-cell " + cell.status;
+            div.textContent = cell.points;
+
+            div.onclick = () => {
+                if (cell.status === "available") {
+                    socket.emit("hostSelectQuestion", cell);
+                    currentCell = cell;
+                } else if (cell.status === "selected") {
+                    socket.emit("resetQuestion", cell);
+                }
+            };
+
+            column.appendChild(div);
+        });
+
+        board.appendChild(column);
+    });
+}
+
+/* ---------------- QUESTION ---------------- */
+function openQuestion(q) {
+    document.getElementById("qCategory").textContent = q.category;
+    document.getElementById("qPoints").textContent = q.points + " Punkte";
+    document.getElementById("qText").textContent = q.question;
+    document.getElementById("qAnswer").textContent = "Antwort: " + q.answer;
+
+    document.getElementById("questionContainer").style.display = "block";
+}
+
+function closeQuestion() {
+    document.getElementById("questionContainer").style.display = "none";
+    currentCell = null;
+}
+
+function markAnswer(correct) {
+    if (!currentCell) return;
+    socket.emit("hostAnswer", { ...currentCell, correct });
+    closeQuestion();
+}
+
+function resetQuestion() {
+    if (!currentCell) return;
+    socket.emit("resetQuestion", currentCell);
+    closeQuestion();
+}
+
+/* ---------------- GAME ---------------- */
+function startNewGame() {
+    if (confirm("Neues Game starten?")) {
+        socket.emit("newGame");
+    }
+}
+
+function closeGame() {
+    socket.emit("closeGame");
+    alert("Game gespeichert & geschlossen");
+}
+
+/* ---------------- JSON ---------------- */
+function uploadJSON() {
+    const file = document.getElementById("jsonFile").files[0];
+    if (!file) return alert("Keine Datei ausgewählt");
+
+    const reader = new FileReader();
+    reader.onload = e => socket.emit("uploadBoardJSON", JSON.parse(e.target.result));
+    reader.readAsText(file);
+}
+
+/* ---------------- SOCKET ---------------- */
+socket.on("gameState", data => {
+    players = data.players;
+    boardState = data.boardState;
+
+    renderPlayers();
+    renderMiniBoard();
+
+    if (data.currentQuestion?.isOpen) {
+        openQuestion(data.currentQuestion);
+    }
+});
+
+socket.on("playersUpdate", p => {
+    players = p;
+    renderPlayers();
+});
+
+socket.on("showQuestion", openQuestion);
+socket.on("questionReset", closeQuestion);
+
+socket.emit("requestGameState");
+</script>
 
 </body>
 </html>

@@ -1,0 +1,47 @@
+{
+  "players": [],
+  "boardState": [
+    [
+      "available",
+      "used",
+      "available",
+      "used",
+      "available"
+    ],
+    [
+      "used",
+      "used",
+      "used",
+      "available",
+      "available"
+    ],
+    [
+      "available",
+      "available",
+      "available",
+      "available",
+      "available"
+    ],
+    [
+      "available",
+      "available",
+      "available",
+      "available",
+      "available"
+    ],
+    [
+      "available",
+      "available",
+      "available",
+      "available",
+      "available"
+    ]
+  ],
+  "currentQuestion": {
+    "category": "CAT1",
+    "points": 200,
+    "question": "Beispiel Frage",
+    "answer": "Beispiel Antwort",
+    "isOpen": false
+  }
+}

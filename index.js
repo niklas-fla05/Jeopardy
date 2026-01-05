@@ -1,6 +1,6 @@
 const fs = require("fs");
-const path = require("path");
 const express = require("express");
+const path = require("path");
 const http = require("http");
 const { Server } = require("socket.io");
 
@@ -11,36 +11,32 @@ const io = new Server(server);
 const PORT = 3000;
 const DATA_FILE = path.join(__dirname, "gameData.json");
 
-/* =========================
-   DEFAULT BOARD
-========================= */
-const DEFAULT_CATEGORIES = ["CAT1","CAT2","CAT3","CAT4","CAT5"];
-const DEFAULT_POINTS = [100,200,300,400,500];
+/* ---------- HELPERS ---------- */
+function createBoardFromJSON(json) {
+    const board = [];
 
-function createEmptyBoard() {
-    return DEFAULT_CATEGORIES.map(() =>
-        DEFAULT_POINTS.map(() => "available")
-    );
+    json.categories.forEach(cat => {
+        const col = [];
+        cat.questions.forEach(q => {
+            col.push({
+                category: cat.name,
+                points: q.points,
+                question: q.question,
+                answer: q.answer,
+                status: "available"
+            });
+        });
+        board.push(col);
+    });
+
+    return board;
 }
 
 function createDummyBoard() {
-    const categories = ["CAT 1", "CAT 2", "CAT 3", "CAT 4", "CAT 5"];
-    const points = [100, 200, 300, 400, 500];
-
-    return categories.map(cat =>
-        points.map(pt => ({
-            category: cat,
-            points: pt,
-            question: `Beispielfrage ${cat} ${pt}`,
-            answer: `Beispielantwort ${cat} ${pt}`,
-            status: "available" // available | selected | used
-        }))
-    );
+    return createBoardFromJSON(require("./public/example-board.json"));
 }
 
-/* =========================
-   GAME STATE
-========================= */
+/* ---------- GAME STATE ---------- */
 let gameData = {
     players: [
         { id: 1, name: "Spieler 1", score: 0 },
@@ -48,143 +44,107 @@ let gameData = {
         { id: 3, name: "Spieler 3", score: 0 },
         { id: 4, name: "Spieler 4", score: 0 }
     ],
-    boardState: createDummyBoard(),
+    boardState: [],
     currentQuestion: {
-        category: null,
-        points: null,
-        question: null,
-        answer: null,
         isOpen: false
     }
 };
 
-
-
-/* =========================
-   LOAD / SAVE
-========================= */
-if (fs.existsSync(DATA_FILE)) {
-    try {
-        const raw = fs.readFileSync(DATA_FILE, "utf8");
-        const parsed = JSON.parse(raw);
-
-        gameData = {
-            ...gameData,
-            ...parsed
-        };
-
-        if (!Array.isArray(gameData.boardState) || !gameData.boardState.length) {
-            gameData.boardState = createEmptyBoard();
-        }
-
-        console.log("✅ GameData geladen");
-    } catch (err) {
-        console.error("❌ Fehler beim Laden:", err);
-    }
-}
-
+/* ---------- LOAD / SAVE ---------- */
 function saveGame() {
     fs.writeFileSync(DATA_FILE, JSON.stringify(gameData, null, 2));
 }
 
-/* =========================
-   SOCKET.IO
-========================= */
+if (fs.existsSync(DATA_FILE)) {
+    gameData = JSON.parse(fs.readFileSync(DATA_FILE));
+} else {
+    gameData.boardState = createDummyBoard();
+    saveGame();
+}
+
+/* ---------- SOCKET ---------- */
 io.on("connection", socket => {
-    console.log("🔌 Client verbunden");
+
+    socket.emit("gameState", gameData);
 
     socket.on("requestGameState", () => {
         socket.emit("gameState", gameData);
     });
 
-    socket.on("hostSelectQuestion", data => {
-        console.log("[SELECT]", data);
+    socket.on("updateScore", ({ playerId, delta }) => {
+        const p = gameData.players.find(p => p.id === playerId);
+        if (!p) return;
+        p.score += delta;
+        saveGame();
+        io.emit("playersUpdate", gameData.players);
+    });
 
-        gameData.currentQuestion = {
-            ...data,
-            isOpen: true
-        };
-
+    socket.on("hostSelectQuestion", cell => {
+        cell.status = "selected";
+        gameData.currentQuestion = { ...cell, isOpen: true };
         saveGame();
         io.emit("showQuestion", gameData.currentQuestion);
     });
 
     socket.on("hostAnswer", ({ correct }) => {
-        console.log("[ANSWER]", correct);
-
+        const q = gameData.currentQuestion;
+        gameData.boardState.forEach(col =>
+            col.forEach(c => {
+                if (c.category === q.category && c.points === q.points) {
+                    c.status = "used";
+                }
+            })
+        );
         gameData.currentQuestion.isOpen = false;
         saveGame();
-
-        io.emit("answerResult", { correct });
+        io.emit("gameState", gameData);
     });
 
-    socket.on("updateBoardState", boardState => {
-        gameData.boardState = boardState;
+    socket.on("resetQuestion", cell => {
+        gameData.boardState.forEach(col =>
+            col.forEach(c => {
+                if (c.category === cell.category && c.points === cell.points) {
+                    c.status = "available";
+                }
+            })
+        );
+        gameData.currentQuestion.isOpen = false;
         saveGame();
-        io.emit("boardStateUpdate", boardState);
-    });
-
-    socket.on("resetQuestion", () => {
-        gameData.currentQuestion = {
-            category: null,
-            points: null,
-            question: null,
-            answer: null,
-            isOpen: false
-        };
-        saveGame();
-        io.emit("questionReset");
+        io.emit("gameState", gameData);
     });
 
     socket.on("newGame", () => {
         gameData.players.forEach(p => p.score = 0);
-        gameData.boardState = createEmptyBoard();
+        gameData.boardState.forEach(col =>
+            col.forEach(c => c.status = "available")
+        );
         gameData.currentQuestion.isOpen = false;
-
         saveGame();
-        io.emit("gameReset", gameData);
+        io.emit("gameState", gameData);
     });
 
+    socket.on("closeGame", saveGame);
 
-    socket.on("closeGame", () => {
+    socket.on("uploadBoardJSON", json => {
+        gameData.boardState = createBoardFromJSON(json);
+        gameData.currentQuestion.isOpen = false;
         saveGame();
-        io.emit("gameClosed");
+        io.emit("gameState", gameData);
     });
-
-    socket.on("updateScore", ({ playerId, delta }) => {
-        const player = gameData.players.find(p => p.id === playerId);
-        if (!player) return;
-
-        player.score += delta;
-        saveGame();
-
-        io.emit("playersUpdate", gameData.players);
-    });
-
 });
 
-/* =========================
-   EXPRESS ROUTES
-========================= */
-app.use(express.json());
+/* ---------- EXPRESS ---------- */
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.json());
 
-app.get("/", (req, res) =>
-    res.sendFile(path.join(__dirname, "public", "index.html"))
+app.get("/host", (_, res) =>
+    res.sendFile(path.join(__dirname, "public/host.html"))
 );
 
-app.get("/host", (req, res) =>
-    res.sendFile(path.join(__dirname, "public", "host.html"))
+app.get("/screen", (_, res) =>
+    res.sendFile(path.join(__dirname, "public/screen.html"))
 );
 
-app.get("/screen", (req, res) =>
-    res.sendFile(path.join(__dirname, "public", "screen.html"))
+server.listen(PORT, () =>
+    console.log(`Server läuft auf http://localhost:${PORT}`)
 );
-
-app.get("/api/game", (req, res) => {
-    res.json(gameData);
-});
-
-server.listen(PORT, "0.0.0.0", () => {
-    console.log(`🚀 Server läuft auf http://localhost:${PORT}`);
-});

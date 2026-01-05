@@ -2,46 +2,197 @@
   "players": [],
   "boardState": [
     [
-      "available",
-      "used",
-      "available",
-      "used",
-      "available"
+      {
+        "category": "Geschichte",
+        "points": 100,
+        "question": "Wann begann der Zweite Weltkrieg?",
+        "answer": "1939",
+        "status": "available"
+      },
+      {
+        "category": "Geschichte",
+        "points": 200,
+        "question": "Wer war der erste Bundeskanzler?",
+        "answer": "Konrad Adenauer",
+        "status": "available"
+      },
+      {
+        "category": "Geschichte",
+        "points": 300,
+        "question": "Was war die Berliner Mauer?",
+        "answer": "Grenzanlage zwischen Ost und West",
+        "status": "available"
+      },
+      {
+        "category": "Geschichte",
+        "points": 400,
+        "question": "Wann fiel die Mauer?",
+        "answer": "1989",
+        "status": "available"
+      },
+      {
+        "category": "Geschichte",
+        "points": 500,
+        "question": "Was war der Kalte Krieg?",
+        "answer": "Konflikt zwischen Ost und West",
+        "status": "available"
+      }
     ],
     [
-      "used",
-      "used",
-      "used",
-      "available",
-      "available"
+      {
+        "category": "Technik",
+        "points": 100,
+        "question": "Wofür steht CPU?",
+        "answer": "Central Processing Unit",
+        "status": "used"
+      },
+      {
+        "category": "Technik",
+        "points": 200,
+        "question": "Was ist HTML?",
+        "answer": "Auszeichnungssprache",
+        "status": "available"
+      },
+      {
+        "category": "Technik",
+        "points": 300,
+        "question": "Was ist ein Server?",
+        "answer": "Rechner für Dienste",
+        "status": "available"
+      },
+      {
+        "category": "Technik",
+        "points": 400,
+        "question": "Was ist TCP/IP?",
+        "answer": "Netzwerkprotokoll",
+        "status": "available"
+      },
+      {
+        "category": "Technik",
+        "points": 500,
+        "question": "Was ist Node.js?",
+        "answer": "JavaScript Runtime",
+        "status": "available"
+      }
     ],
     [
-      "available",
-      "available",
-      "available",
-      "available",
-      "available"
+      {
+        "category": "Gaming",
+        "points": 100,
+        "question": "Was ist Minecraft?",
+        "answer": "Sandbox-Spiel",
+        "status": "available"
+      },
+      {
+        "category": "Gaming",
+        "points": 200,
+        "question": "Wer ist Mario?",
+        "answer": "Nintendo-Figur",
+        "status": "available"
+      },
+      {
+        "category": "Gaming",
+        "points": 300,
+        "question": "Was ist ein NPC?",
+        "answer": "Nicht-Spieler-Charakter",
+        "status": "available"
+      },
+      {
+        "category": "Gaming",
+        "points": 400,
+        "question": "Was ist ein Bossfight?",
+        "answer": "Kampf gegen Endgegner",
+        "status": "available"
+      },
+      {
+        "category": "Gaming",
+        "points": 500,
+        "question": "Was ist Esports?",
+        "answer": "Wettkampf-Gaming",
+        "status": "available"
+      }
     ],
     [
-      "available",
-      "available",
-      "available",
-      "available",
-      "available"
+      {
+        "category": "Film",
+        "points": 100,
+        "question": "Was ist Star Wars?",
+        "answer": "Sci-Fi-Filmreihe",
+        "status": "available"
+      },
+      {
+        "category": "Film",
+        "points": 200,
+        "question": "Wer ist Darth Vader?",
+        "answer": "Antagonist",
+        "status": "available"
+      },
+      {
+        "category": "Film",
+        "points": 300,
+        "question": "Was ist ein Prequel?",
+        "answer": "Vorgeschichte",
+        "status": "available"
+      },
+      {
+        "category": "Film",
+        "points": 400,
+        "question": "Was ist CGI?",
+        "answer": "Computeranimation",
+        "status": "available"
+      },
+      {
+        "category": "Film",
+        "points": 500,
+        "question": "Was ist ein Oscar?",
+        "answer": "Filmpreis",
+        "status": "available"
+      }
     ],
     [
-      "available",
-      "available",
-      "available",
-      "available",
-      "available"
+      {
+        "category": "Random",
+        "points": 100,
+        "question": "Wie viele Tage hat eine Woche?",
+        "answer": "7",
+        "status": "available"
+      },
+      {
+        "category": "Random",
+        "points": 200,
+        "question": "Welche Farbe hat der Himmel?",
+        "answer": "Blau",
+        "status": "available"
+      },
+      {
+        "category": "Random",
+        "points": 300,
+        "question": "Was ist Wasser?",
+        "answer": "H2O",
+        "status": "available"
+      },
+      {
+        "category": "Random",
+        "points": 400,
+        "question": "Was ist Feuer?",
+        "answer": "Verbrennung",
+        "status": "available"
+      },
+      {
+        "category": "Random",
+        "points": 500,
+        "question": "Was ist Zeit?",
+        "answer": "Relativ",
+        "status": "available"
+      }
     ]
   ],
   "currentQuestion": {
-    "category": "CAT1",
-    "points": 200,
-    "question": "Beispiel Frage",
-    "answer": "Beispiel Antwort",
+    "category": "Technik",
+    "points": 100,
+    "question": "Wofür steht CPU?",
+    "answer": "Central Processing Unit",
+    "status": "selected",
     "isOpen": false
   }
 }

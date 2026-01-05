@@ -10,24 +10,19 @@
 
 <div class="host-wrapper">
 
-    <!-- LEFT PANEL -->
     <div class="host-controls">
+        <h1>JEOPARDY HOST</h1>
 
-        <h1 class="title">JEOPARDY HOST</h1>
-
-        <!-- GAME CONTROLS -->
         <div class="controls">
-            <button class="btn" onclick="startNewGame()">Neues Game</button>
-            <button class="btn btn-danger" onclick="closeGame()">Game schließen</button>
+            <button class="btn" onclick="socket.emit('newGame')">Neues Game</button>
+            <button class="btn btn-danger" onclick="socket.emit('closeGame')">Game schließen</button>
         </div>
 
-        <!-- PLAYERS -->
         <div class="players">
             <h2>Players</h2>
             <ul id="playerList"></ul>
         </div>
 
-        <!-- JSON UPLOAD -->
         <div class="json-upload">
             <h2>Board JSON</h2>
             <input type="file" id="jsonFile" accept=".json">
@@ -35,7 +30,6 @@
         </div>
     </div>
 
-    <!-- RIGHT PANEL -->
     <div class="mini-board">
         <h2>Board Status</h2>
         <div id="miniBoard" class="board-grid"></div>
@@ -43,141 +37,94 @@
 
 </div>
 
-<!-- QUESTION OVERLAY (ZENTRIERT!) -->
 <div id="questionContainer" class="question-overlay">
-
     <h3 id="qCategory"></h3>
     <h4 id="qPoints"></h4>
-
     <p id="qText"></p>
-
-    <p id="qAnswer" class="answer"></p>
-
+    <p id="qAnswer"></p>
     <div class="controls">
         <button class="btn" onclick="markAnswer(true)">Richtig</button>
         <button class="btn btn-danger" onclick="markAnswer(false)">Falsch</button>
         <button class="btn" onclick="resetQuestion()">Zurücksetzen</button>
     </div>
-
 </div>
 
 <script>
 const socket = io();
-
 let players = [];
 let boardState = [];
 let currentCell = null;
 
-/* ---------------- PLAYERS ---------------- */
 function renderPlayers() {
-    const list = document.getElementById("playerList");
-    list.innerHTML = "";
-
+    const ul = document.getElementById("playerList");
+    ul.innerHTML = "";
     players.forEach(p => {
-        const li = document.createElement("li");
-        li.innerHTML = `
-            <strong>${p.name}</strong> – ${p.score} pts
-            <button onclick="changeScore(${p.id}, 100)">+100</button>
-            <button onclick="changeScore(${p.id}, -100)">-100</button>
-        `;
-        list.appendChild(li);
+        ul.innerHTML += `
+            <li>
+                ${p.name} – ${p.score}
+                <button onclick="socket.emit('updateScore',{playerId:${p.id},delta:100})">+100</button>
+                <button onclick="socket.emit('updateScore',{playerId:${p.id},delta:-100})">-100</button>
+            </li>`;
     });
 }
 
-function changeScore(id, delta) {
-    socket.emit("updateScore", { playerId: id, delta });
-}
-
-/* ---------------- MINI BOARD ---------------- */
-function renderMiniBoard() {
+function renderBoard() {
     const board = document.getElementById("miniBoard");
     board.innerHTML = "";
-
     boardState.forEach(col => {
-        const column = document.createElement("div");
-        column.className = "board-column";
-
+        const c = document.createElement("div");
+        c.className = "board-column";
         col.forEach(cell => {
-            const div = document.createElement("div");
-            div.className = "mini-cell " + cell.status;
-            div.textContent = cell.points;
-
-            div.onclick = () => {
+            const d = document.createElement("div");
+            d.className = "mini-cell " + cell.status;
+            d.textContent = cell.points;
+            d.onclick = () => {
                 if (cell.status === "available") {
-                    socket.emit("hostSelectQuestion", cell);
                     currentCell = cell;
-                } else if (cell.status === "selected") {
-                    socket.emit("resetQuestion", cell);
+                    socket.emit("hostSelectQuestion", cell);
                 }
             };
-
-            column.appendChild(div);
+            c.appendChild(d);
         });
-
-        board.appendChild(column);
+        board.appendChild(c);
     });
 }
 
-/* ---------------- QUESTION ---------------- */
 function openQuestion(q) {
     document.getElementById("qCategory").textContent = q.category;
-    document.getElementById("qPoints").textContent = q.points + " Punkte";
+    document.getElementById("qPoints").textContent = q.points;
     document.getElementById("qText").textContent = q.question;
     document.getElementById("qAnswer").textContent = "Antwort: " + q.answer;
-
     document.getElementById("questionContainer").style.display = "block";
 }
 
-function closeQuestion() {
-    document.getElementById("questionContainer").style.display = "none";
-    currentCell = null;
-}
-
 function markAnswer(correct) {
-    if (!currentCell) return;
-    socket.emit("hostAnswer", { ...currentCell, correct });
-    closeQuestion();
+    socket.emit("hostAnswer", { correct });
+    document.getElementById("questionContainer").style.display = "none";
 }
 
 function resetQuestion() {
-    if (!currentCell) return;
     socket.emit("resetQuestion", currentCell);
-    closeQuestion();
+    document.getElementById("questionContainer").style.display = "none";
 }
 
-/* ---------------- GAME ---------------- */
-function startNewGame() {
-    if (confirm("Neues Game starten?")) {
-        socket.emit("newGame");
-    }
-}
-
-function closeGame() {
-    socket.emit("closeGame");
-    alert("Game gespeichert & geschlossen");
-}
-
-/* ---------------- JSON ---------------- */
 function uploadJSON() {
     const file = document.getElementById("jsonFile").files[0];
-    if (!file) return alert("Keine Datei ausgewählt");
+    if (!file) return alert("Keine Datei gewählt");
 
     const reader = new FileReader();
-    reader.onload = e => socket.emit("uploadBoardJSON", JSON.parse(e.target.result));
+    reader.onload = e => {
+        socket.emit("uploadBoardJSON", JSON.parse(e.target.result));
+    };
     reader.readAsText(file);
 }
 
-/* ---------------- SOCKET ---------------- */
 socket.on("gameState", data => {
     players = data.players;
     boardState = data.boardState;
-
     renderPlayers();
-    renderMiniBoard();
-
-    if (data.currentQuestion?.isOpen) {
-        openQuestion(data.currentQuestion);
-    }
+    renderBoard();
+    if (data.currentQuestion?.isOpen) openQuestion(data.currentQuestion);
 });
 
 socket.on("playersUpdate", p => {
@@ -186,7 +133,6 @@ socket.on("playersUpdate", p => {
 });
 
 socket.on("showQuestion", openQuestion);
-socket.on("questionReset", closeQuestion);
 
 socket.emit("requestGameState");
 </script>

@@ -3,6 +3,7 @@ const path = require("path");
 
 const app = express();
 const PORT = 3000;
+const HOST = '0.0.0.0';
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -18,6 +19,6 @@ app.get("/host", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "host.html"));
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
   console.log(`Server läuft auf http://localhost:${PORT}`);
 });

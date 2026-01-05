@@ -1,0 +1,70 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Arial", sans-serif;
+}
+
+/* Background */
+body {
+    height: 100vh;
+    background:
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)),
+        url("/assets/background.jpg") no-repeat center center fixed;
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Center container */
+.container {
+    text-align: center;
+    background: rgba(15, 5, 5, 0.8);
+    padding: 50px 60px;
+    border-radius: 18px;
+    box-shadow:
+        0 0 35px rgba(0,0,0,0.9),
+        inset 0 0 18px rgba(255,140,0,0.15);
+}
+
+/* Title */
+.title {
+    font-size: 3.5rem;
+    color: #ffae42; /* orange-gold */
+    letter-spacing: 4px;
+    margin-bottom: 15px;
+    text-shadow:
+        0 0 10px rgba(255,140,0,0.6),
+        2px 2px 10px black;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.btn {
+    text-decoration: none;
+    background: linear-gradient(180deg, #8b0000, #5a0000);
+    color: #ffae42;
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 2px solid #ff7a18;
+    transition: all 0.25s ease;
+    box-shadow: 0 0 12px rgba(255,100,0,0.3);
+}
+
+.btn:hover {
+    background: linear-gradient(180deg, #ff7a18, #ffae42);
+    color: #4a0000;
+    transform: scale(1.08);
+    box-shadow: 0 0 20px rgba(255,140,0,0.8);
+}

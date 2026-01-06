@@ -1,129 +1,56 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
+* {margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
 
 body {
-    height: 100vh;
-    background:
-        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)),
-        url("/assets/background.jpg") no-repeat center center fixed;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height:100vh;
+    background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.75)), url("/assets/background.jpg") center/cover no-repeat;
 }
 
-.screen-wrapper {
-    width: 95%;
-    height: 90%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+.screen {height:100%;display:flex;align-items:center;justify-content:center;}
+.row {width:95%;display:flex;align-items:flex-start;justify-content:space-between;}
 
-/* Board oben */
-.board-container {
-    align-self: center;
-    width: 80%;
-    text-align: center;
-}
+.board-wrapper {width:52%;position:relative;text-align:center;}
+.title {font-size:3.2rem;color:#ffae42;margin-bottom:18px;letter-spacing:5px;text-shadow:0 0 12px rgba(0,0,0,0.9);}
+.board {display:grid;grid-template-columns:repeat(5,1fr);gap:14px;transition:filter 0.4s ease;}
+.category {background:linear-gradient(#9b0000,#5a0000);color:#ffae42;padding:14px;border-radius:12px;border:2px solid #ff7a18;font-weight:bold;text-align:center;}
+.cell {background:linear-gradient(#7a0000,#3a0000);color:#ffae42;padding:22px;font-size:1.8rem;font-weight:bold;border-radius:12px;border:2px solid #ff7a18;position:relative;}
+.cell.used {text-decoration:line-through;color:#555;background:rgba(50,50,50,0.6);cursor:default;}
+.cell.selected {border:2px solid #ffae42;box-shadow:0 0 10px rgba(255,140,0,0.7);}
 
-.title {
-    font-size: 3rem;
-    color: #ffae42;
-    letter-spacing: 4px;
-    margin-bottom: 15px;
-    text-shadow: 0 0 12px rgba(255,140,0,0.6);
-}
-
-.board {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px; /* kompakter */
-}
-
-.category {
-    background: linear-gradient(180deg, #8b0000, #5a0000);
-    color: #ffae42;
-    font-size: 1.1rem;
-    font-weight: bold;
-    padding: 8px 5px;
-    text-align: center;
-    border-radius: 6px;
-    border: 2px solid #ff7a18;
-    text-shadow: 1px 1px 3px black;
-}
-
-.cell {
-    background: linear-gradient(180deg, #4a0000, #2a0000);
-    color: #ffae42;
-    font-size: 1.5rem;
-    font-weight: bold;
-    padding: 15px 5px;
-    text-align: center;
-    border-radius: 6px;
-    border: 2px solid #ff7a18;
-    box-shadow: inset 0 0 8px rgba(255,120,0,0.2);
-}
-
-.bottom-panel {
-    display: flex;
-    gap: 20px;
-}
-
-.cams-container {
-    flex: 3;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 Cams nebeneinander */
-    gap: 15px;
-}
-
-.cam-block {
+.overlay {position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:50;}
+.question-box {max-width:75%;text-align:center;display:flex;flex-direction:column;gap:25px;}
+.question-container {padding:20px;background:linear-gradient(#7a0000,#3a0000);border-radius:12px;border:2px solid #ff7a18;color:#ffae42;font-size:2rem;font-weight:bold;}
+.answer-box {padding:20px;background:linear-gradient(#7a0000,#3a0000);border:2px solid #ff7a18;border-radius:12px;color:#00ff99;font-size:2.2rem;font-weight:bold;}
+.hidden {display:none;}
+.blurred {filter:blur(5px);transition:filter 0.4s ease;}
+.cams {
+    width: 22%;
     display: flex;
     flex-direction: column;
+    gap: 15px; /* kleinerer Abstand zwischen CAM und Score */
     align-items: center;
-    gap: 5px;
 }
 
-.cam-placeholder {
-    background: rgba(0,0,0,0.6);
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #ffae42;
-    font-weight: bold;
-    font-size: 1.3rem;
-    border: 2px solid #ff7a18;
-    min-height: 150px;
+.cam {
+    height: 260px;
     width: 100%;
-}
-
-.score {
-    background: rgba(139,0,0,0.8);
+    background: rgba(0,0,0,0.55);
+    border: 3px solid #ff7a18;
+    border-radius: 18px;
     color: #ffae42;
+    font-size: 1.6rem;
     font-weight: bold;
-    font-size: 1rem;
-    padding: 5px 10px;
-    border-radius: 6px;
-    border: 1px solid #ff7a18;
-    width: 80%;
-    text-align: center;
-}
-
-.chat-placeholder {
-    flex: 1;
-    background: rgba(0,0,0,0.6);
-    border-radius: 10px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    color: #ffae42;
+    justify-content: center;
+    text-shadow: 0 0 8px black;
+}
+
+.player-score {
+    font-size: 1.8rem;
     font-weight: bold;
-    font-size: 1rem;
-    border: 2px solid #ff7a18;
-    min-height: 120px;
+    color: #00ff99;
+    text-shadow: 0 0 6px black;
+    text-align: center;
+    margin-bottom: 15px; /* Abstand zwischen Score und nächster CAM */
+    width: 100%;
 }

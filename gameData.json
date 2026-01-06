@@ -1,5 +1,26 @@
 {
-  "players": [],
+  "players": [
+    {
+      "id": 1,
+      "name": "Spieler 1",
+      "score": 0
+    },
+    {
+      "id": 2,
+      "name": "Spieler 2",
+      "score": 0
+    },
+    {
+      "id": 3,
+      "name": "Spieler 3",
+      "score": 0
+    },
+    {
+      "id": 4,
+      "name": "Spieler 4",
+      "score": 0
+    }
+  ],
   "boardState": [
     [
       {
@@ -188,11 +209,11 @@
     ]
   ],
   "currentQuestion": {
-    "category": "Geschichte",
+    "category": "Gaming",
     "points": 400,
-    "question": "Wann fiel die Mauer?",
-    "answer": "1989",
+    "question": "Was ist ein Bossfight?",
+    "answer": "Kampf gegen Endgegner",
     "status": "selected",
-    "isOpen": true
+    "isOpen": false
   }
 }

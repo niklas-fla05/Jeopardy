@@ -105,3 +105,49 @@ body {
     box-shadow: 0 0 10px rgba(255,140,0,0.7);
 }
 
+.players-control-box {
+    width: 90%;
+    max-width: 1400px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(0,0,0,0.85);
+    border-radius: 15px;
+    color: #ffae42;
+}
+
+.players-control-box h2 {
+    margin-bottom: 15px;
+}
+
+.player-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.player-row span {
+    flex: 1;
+    font-weight: bold;
+}
+
+.player-row button {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 2px solid #ff7a18;
+    background: linear-gradient(180deg, #8b0000,#5a0000);
+    color: #ffae42;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s all;
+}
+
+.player-row button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255,140,0,0.8);
+}
+.player-row button.btn-danger {
+    background: linear-gradient(180deg, #4a0000,#2a0000);
+    border-color: #ff4500;
+}
+

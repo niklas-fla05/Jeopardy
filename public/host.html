@@ -18,11 +18,6 @@
             <button class="btn btn-danger" onclick="socket.emit('closeGame')">Game schließen</button>
         </div>
 
-        <div class="players">
-            <h2>Players</h2>
-            <ul id="playerList"></ul>
-        </div>
-
         <div class="json-upload">
             <h2>Board JSON</h2>
             <input type="file" id="jsonFile" accept=".json">
@@ -35,14 +30,19 @@
         <div id="miniBoard" class="board-grid"></div>
     </div>
 
+    <!-- NEU: Spieler Controls unter dem Board -->
+    <div id="playerControls" class="player-controls"></div>
+
 </div>
 
-<div id="questionContainer" class="question-overlay">
+<!-- Overlay Frage / Antwort -->
+<div id="questionBox" class="question-overlay hidden">
     <h3 id="qCategory"></h3>
     <h4 id="qPoints"></h4>
     <p id="qText"></p>
     <p id="qAnswer"></p>
     <div class="controls">
+        <button class="btn" onclick="revealAnswerOnScreen()">Antwort anzeigen</button>
         <button class="btn" onclick="markAnswer(true)">Richtig</button>
         <button class="btn btn-danger" onclick="markAnswer(false)">Falsch</button>
         <button class="btn" onclick="resetQuestion()">Zurücksetzen</button>
@@ -50,8 +50,5 @@
 </div>
 
 <script src="/src/host.js"></script>
-
-</script>
-
 </body>
 </html>

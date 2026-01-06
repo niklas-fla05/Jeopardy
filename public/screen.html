@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <title>Jeopardy Screen</title>
@@ -7,83 +7,50 @@
 </head>
 <body>
 
-<div class="screen-wrapper">
+<div class="screen">
+    <div class="row">
 
-    <!-- JEOPARDY BOARD OBEN MITTEN -->
-    <div class="board-container">
-        <h1 class="title">JEOPARDY</h1>
-        <div class="board">
-            <div class="category">CATEGORY 1</div>
-            <div class="category">CATEGORY 2</div>
-            <div class="category">CATEGORY 3</div>
-            <div class="category">CATEGORY 4</div>
-            <div class="category">CATEGORY 5</div>
+        <!-- LEFT CAMS -->
+        <div class="cams">
+            <div class="cam">CAM 1</div>
+            <div class="player-score" id="score1">Punkte: 0</div>
 
-            <div class="cell">100</div>
-            <div class="cell">100</div>
-            <div class="cell">100</div>
-            <div class="cell">100</div>
-            <div class="cell">100</div>
-
-            <div class="cell">200</div>
-            <div class="cell">200</div>
-            <div class="cell">200</div>
-            <div class="cell">200</div>
-            <div class="cell">200</div>
-
-            <div class="cell">300</div>
-            <div class="cell">300</div>
-            <div class="cell">300</div>
-            <div class="cell">300</div>
-            <div class="cell">300</div>
-
-            <div class="cell">400</div>
-            <div class="cell">400</div>
-            <div class="cell">400</div>
-            <div class="cell">400</div>
-            <div class="cell">400</div>
-
-            <div class="cell">500</div>
-            <div class="cell">500</div>
-            <div class="cell">500</div>
-            <div class="cell">500</div>
-            <div class="cell">500</div>
+            <div class="cam">CAM 2</div>
+            <div class="player-score" id="score2">Punkte: 0</div>
         </div>
+
+        <!-- BOARD -->
+        <div class="board-wrapper">
+            <h1 class="title">JEOPARDY</h1>
+            <div class="board" id="boardContainer">
+                <!-- Kategorien & Zellen werden dynamisch geladen -->
+            </div>
+
+            <div id="questionOverlay" class="overlay hidden">
+                <div class="question-box">
+                    <div class="question-container">
+                        <h2 id="qCategory"></h2>
+                        <p id="qPoints"></p>
+                        <p id="qQuestion"></p>
+                    </div>
+                    <div id="qAnswer" class="answer-box hidden"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT CAMS -->
+        <div class="cams">
+            <div class="cam">CAM 3</div>
+            <div class="player-score" id="score3">Punkte: 0</div>
+
+            <div class="cam">CAM 4</div>
+            <div class="player-score" id="score4">Punkte: 0</div>
+        </div>
+
     </div>
+</div>
 
-    <!-- UNTERER BEREICH: Chat links, Cams rechts -->
-    <div class="bottom-panel">
-        <!-- Chat links -->
-        <div class="chat-placeholder">
-            <p></p>
-        </div>
-
-        <!-- Cams rechts -->
-        <div class="cams-container">
-            <div class="cam-block">
-                <div class="cam-placeholder"><p>CAM 1</p></div>
-                <div class="score"><p>0</p></div>
-            </div>
-
-            <div class="cam-block">
-                <div class="cam-placeholder"><p>CAM 2</p></div>
-                <div class="score"><p>0</p></div>
-            </div>
-
-            <div class="cam-block">
-                <div class="cam-placeholder"><p>CAM 3</p></div>
-                <div class="score"><p>0</p></div>
-            </div>
-
-            <div class="cam-block">
-                <div class="cam-placeholder"><p>CAM 4</p></div>
-                <div class="score"><p>0</p></div>
-            </div>
-            
-        </div>
-
-
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="/src/screen.js"></script>
-    </body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/src/screen.js"></script>
+</body>
 </html>

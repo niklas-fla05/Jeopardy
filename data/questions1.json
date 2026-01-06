@@ -1,0 +1,154 @@
+{
+  "categories": [
+    {
+      "name": "Kategorie 1",
+      "questions": [
+        {
+          "points": 100,
+          "question": "Frage 1 der Kategorie 1",
+          "answer": "Antwort 1 der Kategorie 1"
+        },
+        {
+          "points": 200,
+          "question": "Frage 2 der Kategorie 1",
+          "answer": "Antwort 2 der Kategorie 1"
+        },
+        {
+          "points": 300,
+          "question": "Frage 3 der Kategorie 1",
+          "answer": "Antwort 3 der Kategorie 1"
+        },
+        {
+          "points": 400,
+          "question": "Frage 4 der Kategorie 1",
+          "answer": "Antwort 4 der Kategorie 1"
+        },
+        {
+          "points": 500,
+          "question": "Frage 5 der Kategorie 1",
+          "answer": "Antwort 5 der Kategorie 1"
+        }
+      ]
+    },
+    {
+      "name": "Kategorie 1",
+      "questions": [
+        {
+          "points": 100,
+          "question": "Frage 1 der Kategorie 1",
+          "answer": "Antwort 1 der Kategorie 1"
+        },
+        {
+          "points": 200,
+          "question": "Frage 2 der Kategorie 1",
+          "answer": "Antwort 2 der Kategorie 1"
+        },
+        {
+          "points": 300,
+          "question": "Frage 3 der Kategorie 1",
+          "answer": "Antwort 3 der Kategorie 1"
+        },
+        {
+          "points": 400,
+          "question": "Frage 4 der Kategorie 1",
+          "answer": "Antwort 4 der Kategorie 1"
+        },
+        {
+          "points": 500,
+          "question": "Frage 5 der Kategorie 1",
+          "answer": "Antwort 5 der Kategorie 1"
+        }
+      ]
+    },
+    {
+      "name": "Kategorie 1",
+      "questions": [
+        {
+          "points": 100,
+          "question": "Frage 1 der Kategorie 1",
+          "answer": "Antwort 1 der Kategorie 1"
+        },
+        {
+          "points": 200,
+          "question": "Frage 2 der Kategorie 1",
+          "answer": "Antwort 2 der Kategorie 1"
+        },
+        {
+          "points": 300,
+          "question": "Frage 3 der Kategorie 1",
+          "answer": "Antwort 3 der Kategorie 1"
+        },
+        {
+          "points": 400,
+          "question": "Frage 4 der Kategorie 1",
+          "answer": "Antwort 4 der Kategorie 1"
+        },
+        {
+          "points": 500,
+          "question": "Frage 5 der Kategorie 1",
+          "answer": "Antwort 5 der Kategorie 1"
+        }
+      ]
+    },
+    {
+      "name": "Kategorie 1",
+      "questions": [
+        {
+          "points": 100,
+          "question": "Frage 1 der Kategorie 1",
+          "answer": "Antwort 1 der Kategorie 1"
+        },
+        {
+          "points": 200,
+          "question": "Frage 2 der Kategorie 1",
+          "answer": "Antwort 2 der Kategorie 1"
+        },
+        {
+          "points": 300,
+          "question": "Frage 3 der Kategorie 1",
+          "answer": "Antwort 3 der Kategorie 1"
+        },
+        {
+          "points": 400,
+          "question": "Frage 4 der Kategorie 1",
+          "answer": "Antwort 4 der Kategorie 1"
+        },
+        {
+          "points": 500,
+          "question": "Frage 5 der Kategorie 1",
+          "answer": "Antwort 5 der Kategorie 1"
+        }
+      ]
+    },
+    {
+      "name": "Kategorie 1",
+      "questions": [
+        {
+          "points": 100,
+          "question": "Frage 1 der Kategorie 1",
+          "answer": "Antwort 1 der Kategorie 1"
+        },
+        {
+          "points": 200,
+          "question": "Frage 2 der Kategorie 1",
+          "answer": "Antwort 2 der Kategorie 1"
+        },
+        {
+          "points": 300,
+          "question": "Frage 3 der Kategorie 1",
+          "answer": "Antwort 3 der Kategorie 1"
+        },
+        {
+          "points": 400,
+          "question": "Frage 4 der Kategorie 1",
+          "answer": "Antwort 4 der Kategorie 1"
+        },
+        {
+          "points": 500,
+          "question": "Frage 5 der Kategorie 1",
+          "answer": "Antwort 5 der Kategorie 1"
+        }
+      ]
+    }
+  ]
+}

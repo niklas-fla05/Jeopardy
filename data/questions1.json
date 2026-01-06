@@ -1,7 +1,37 @@
 {
   "categories": [
     {
-      "name": "Kategorie 1",
+      "name": "Anime",
+      "questions": [
+        {
+          "points": 100,
+          "question": "Wer ist der Hauptcharakter in „Naruto“?",
+          "answer": "Naruto Uzumaki"
+        },
+        {
+          "points": 200,
+          "question": "In welchem Anime kämpft ein Junge gegen Riesen?",
+          "answer": "Attack on Titan"
+        },
+        {
+          "points": 300,
+          "question": "Frage 3 der Kategorie 1",
+          "answer": "Antwort 3 der Kategorie 1"
+        },
+        {
+          "points": 400,
+          "question": "Frage 4 der Kategorie 1",
+          "answer": "Antwort 4 der Kategorie 1"
+        },
+        {
+          "points": 500,
+          "question": "Welcher Anime ist berühmt für den Satz „Ich werde dich töten… sobald ich erwachsen bin!“?",
+          "answer": "Fullmetal Alchemist"
+        }
+      ]
+    },
+    {
+      "name": "Gaming",
       "questions": [
         {
           "points": 100,
@@ -31,7 +61,7 @@
       ]
     },
     {
-      "name": "Kategorie 1",
+      "name": "Musik",
       "questions": [
         {
           "points": 100,
@@ -61,7 +91,7 @@
       ]
     },
     {
-      "name": "Kategorie 1",
+      "name": "Souls",
       "questions": [
         {
           "points": 100,
@@ -91,37 +121,7 @@
       ]
     },
     {
-      "name": "Kategorie 1",
-      "questions": [
-        {
-          "points": 100,
-          "question": "Frage 1 der Kategorie 1",
-          "answer": "Antwort 1 der Kategorie 1"
-        },
-        {
-          "points": 200,
-          "question": "Frage 2 der Kategorie 1",
-          "answer": "Antwort 2 der Kategorie 1"
-        },
-        {
-          "points": 300,
-          "question": "Frage 3 der Kategorie 1",
-          "answer": "Antwort 3 der Kategorie 1"
-        },
-        {
-          "points": 400,
-          "question": "Frage 4 der Kategorie 1",
-          "answer": "Antwort 4 der Kategorie 1"
-        },
-        {
-          "points": 500,
-          "question": "Frage 5 der Kategorie 1",
-          "answer": "Antwort 5 der Kategorie 1"
-        }
-      ]
-    },
-    {
-      "name": "Kategorie 1",
+      "name": "Algemeinwissen",
       "questions": [
         {
           "points": 100,

@@ -44,7 +44,7 @@
         "points": 100,
         "question": "Wofür steht CPU?",
         "answer": "Central Processing Unit",
-        "status": "used"
+        "status": "available"
       },
       {
         "category": "Technik",
@@ -188,11 +188,11 @@
     ]
   ],
   "currentQuestion": {
-    "category": "Technik",
-    "points": 100,
-    "question": "Wofür steht CPU?",
-    "answer": "Central Processing Unit",
+    "category": "Geschichte",
+    "points": 400,
+    "question": "Wann fiel die Mauer?",
+    "answer": "1989",
     "status": "selected",
-    "isOpen": false
+    "isOpen": true
   }
 }

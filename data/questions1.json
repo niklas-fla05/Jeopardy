@@ -15,13 +15,13 @@
         },
         {
           "points": 300,
-          "question": "Frage 3 der Kategorie 1",
-          "answer": "Antwort 3 der Kategorie 1"
+          "question": "Wie heißt der Entwickler von Sword Art Online, der das Death Game erschaffen hat?",
+          "answer": "Akihiko Kayaba"
         },
         {
           "points": 400,
-          "question": "Frage 4 der Kategorie 1",
-          "answer": "Antwort 4 der Kategorie 1"
+          "question": "Wie heißt der Piratenkapitän mit dem Strohhut?",
+          "answer": "Monkey D. Luffy"
         },
         {
           "points": 500,
@@ -35,58 +35,58 @@
       "questions": [
         {
           "points": 100,
-          "question": "Frage 1 der Kategorie 1",
-          "answer": "Antwort 1 der Kategorie 1"
+          "question": "Was hat die Firma Nintendo ursprünglich hergestellt?",
+          "answer": "Spielkarten"
         },
         {
           "points": 200,
-          "question": "Frage 2 der Kategorie 1",
-          "answer": "Antwort 2 der Kategorie 1"
+          "question": "Was war das erste Videospiel der Welt?",
+          "answer": "Pong"
         },
         {
           "points": 300,
-          "question": "Frage 3 der Kategorie 1",
-          "answer": "Antwort 3 der Kategorie 1"
+          "question": "Wie viel kostet die Pistole ‚USP-S‘ in CS:GO?",
+          "answer": "200 Dollar"
         },
         {
           "points": 400,
-          "question": "Frage 4 der Kategorie 1",
-          "answer": "Antwort 4 der Kategorie 1"
+          "question": "In ‚The Legend of Zelda: Ocarina of Time‘ gibt es ein Item, das Link nur in einem bestimmten Minispiel bekommt und das ihn schneller laufen lässt. Wie heißt es?",
+          "answer": "Hover Boots"
         },
         {
           "points": 500,
-          "question": "Frage 5 der Kategorie 1",
-          "answer": "Antwort 5 der Kategorie 1"
+          "question": "Dieses antike Lichtwesen ist der wahre Endgegner von Hallownest. Er ist nur erreichbar, wenn man die Träume des Hollow Knights mithilfe des Traumnagels betritt.",
+          "answer": "The Radiance"
         }
       ]
     },
     {
-      "name": "Musik",
+      "name": "Filme",
       "questions": [
         {
           "points": 100,
-          "question": "Frage 1 der Kategorie 1",
-          "answer": "Antwort 1 der Kategorie 1"
+          "question": "Wie ist der Richtige Name des Superheldens, der im zweiten Weltkrieg gegen Hydra gekämpft hat?",
+          "answer": "Steve Rogers"
         },
         {
           "points": 200,
-          "question": "Frage 2 der Kategorie 1",
-          "answer": "Antwort 2 der Kategorie 1"
+          "question": "Nenne alle Emotionen aus dem Film ‚Alles steht Kopf‘.",
+          "answer": "Freude, Trauer, Wut, Ekel, Angst"
         },
         {
           "points": 300,
-          "question": "Frage 3 der Kategorie 1",
-          "answer": "Antwort 3 der Kategorie 1"
+          "question": "Wie heißen die 4 Robins von Batman?",
+          "answer": "Dick Grayson, Jason Todd, Tim Drake, Damian Wayne"
         },
         {
           "points": 400,
-          "question": "Frage 4 der Kategorie 1",
-          "answer": "Antwort 4 der Kategorie 1"
+          "question": "nenne alle Mitglieder von Yoda's Lineage in ‚Star Wars‘.",
+          "answer": "Yoda, Count Dooku, Qui-Gon Jinn, Obi-Wan Kenobi, Anakin Skywalker, Ahsoka Tano, (Sabine Wren)"
         },
         {
           "points": 500,
-          "question": "Frage 5 der Kategorie 1",
-          "answer": "Antwort 5 der Kategorie 1"
+          "question": "In ‚Der Herr der Ringe‘: Wie lautet der Name des Elben, der die Brücke von Khazad-dûm bewacht und Gandalf im Kampf gegen den Balrog hilft?",
+          "answer": "Gandalf selbst kämpft dort – aber der Elb wäre Glorfindel im Buch, im Film wird es nicht erwähnt"
         }
       ]
     },
@@ -95,28 +95,28 @@
       "questions": [
         {
           "points": 100,
-          "question": "Frage 1 der Kategorie 1",
-          "answer": "Antwort 1 der Kategorie 1"
+          "question": "In ‚Dark Souls‘: Wie heißt der NPC, der die Pyromantie-Lehren weitergibt und später in Chaosburg gefangen ist?",
+          "answer": "Laurentius von den Großen Feuer"
         },
         {
           "points": 200,
-          "question": "Frage 2 der Kategorie 1",
-          "answer": "Antwort 2 der Kategorie 1"
+          "question": "Welche Waffe in ‚Bloodborne‘ kann als Säbel und Gewehr zugleich verwendet werden und eignet sich besonders für schnelle Stagger-Angriffe?",
+          "answer": "Saw Cleaver"
         },
         {
           "points": 300,
-          "question": "Frage 3 der Kategorie 1",
-          "answer": "Antwort 3 der Kategorie 1"
+          "question": "Welche Waffe in ‚Dark Souls‘ kann man nur erhalten, wenn man das Spiel mit einem bestimmten Covenant abschließt?",
+          "answer": "Dragonslayer Spear"
         },
         {
           "points": 400,
-          "question": "Frage 4 der Kategorie 1",
-          "answer": "Antwort 4 der Kategorie 1"
+          "question": "In ‚Elden Ring‘: Wie lautet der vollständige Name der Hexe, die den Spieler auf seiner Reise durch das Tribunal unterstützt und eine der Hauptfiguren der Story ist?",
+          "answer": "Ranni, die Blaue Hexe"
         },
         {
           "points": 500,
-          "question": "Frage 5 der Kategorie 1",
-          "answer": "Antwort 5 der Kategorie 1"
+          "question": "In ‚Dark Souls‘: Wie heißt die Waffe, die nur vom Artorias des Abgrunds besiegt werden kann und die Fähigkeit hat, Abyss-Schaden zu verursachen?",
+          "answer": "Greatsword of Artorias"
         }
       ]
     },
@@ -125,28 +125,28 @@
       "questions": [
         {
           "points": 100,
-          "question": "Frage 1 der Kategorie 1",
-          "answer": "Antwort 1 der Kategorie 1"
+          "question": "Welche chemische Verbindung hat die Formel Dihydrogenmonoxid?",
+          "answer": "Wasser"
         },
         {
           "points": 200,
-          "question": "Frage 2 der Kategorie 1",
-          "answer": "Antwort 2 der Kategorie 1"
+          "question": "In welchem Jahr begann die Französische Revolution?",
+          "answer": "1789"
         },
         {
           "points": 300,
-          "question": "Frage 3 der Kategorie 1",
-          "answer": "Antwort 3 der Kategorie 1"
+          "question": "Nenne alle Planeten unseres Sonnensystems in der richtigen Reihenfolge von der Sonne aus gesehen.",
+          "answer": "Mercury, Venus, Erde, Mars, Jupiter, Saturn, Uranus, Neptun"
         },
         {
           "points": 400,
-          "question": "Frage 4 der Kategorie 1",
-          "answer": "Antwort 4 der Kategorie 1"
+          "question": "Wie nennt man die politische Richtung, die individuelle Freiheit und freie Marktwirtschaft betont?",
+          "answer": "Liberalismus"
         },
         {
           "points": 500,
-          "question": "Frage 5 der Kategorie 1",
-          "answer": "Antwort 5 der Kategorie 1"
+          "question": "Wie heißt die Theorie von Albert Einstein, die die Beziehung von Raum, Zeit und Gravitation beschreibt?",
+          "answer": "Allgemeine Relativitätstheorie"
         }
       ]
     }

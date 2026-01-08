@@ -2,55 +2,147 @@
 
 body {
     height:100vh;
-    background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.75)), url("/assets/background.jpg") center/cover no-repeat;
+    background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.75)),
+                url("/assets/background.jpg") center/cover no-repeat;
 }
 
 .screen {height:100%;display:flex;align-items:center;justify-content:center;}
 .row {width:95%;display:flex;align-items:flex-start;justify-content:space-between;}
 
-.board-wrapper {width:52%;position:relative;text-align:center;}
-.title {font-size:3.2rem;color:#ffae42;margin-bottom:18px;letter-spacing:5px;text-shadow:0 0 12px rgba(0,0,0,0.9);}
-.board {display:grid;grid-template-columns:repeat(5,1fr);gap:14px;transition:filter 0.4s ease;}
-.category {background:linear-gradient(#9b0000,#5a0000);color:#ffae42;padding:14px;border-radius:12px;border:2px solid #ff7a18;font-weight:bold;text-align:center;}
-.cell {background:linear-gradient(#7a0000,#3a0000);color:#ffae42;padding:22px;font-size:1.8rem;font-weight:bold;border-radius:12px;border:2px solid #ff7a18;position:relative;}
-.cell.used {text-decoration:line-through;color:#555;background:rgba(50,50,50,0.6);cursor:default;}
-.cell.selected {border:2px solid #ffae42;box-shadow:0 0 10px rgba(255,140,0,0.7);}
-
-.overlay {position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:50;}
-.question-box {max-width:75%;text-align:center;display:flex;flex-direction:column;gap:25px;}
-.question-container {padding:20px;background:linear-gradient(#7a0000,#3a0000);border-radius:12px;border:2px solid #ff7a18;color:#ffae42;font-size:2rem;font-weight:bold;}
-.answer-box {padding:20px;background:linear-gradient(#7a0000,#3a0000);border:2px solid #ff7a18;border-radius:12px;color:#00ff99;font-size:2.2rem;font-weight:bold;}
-.hidden {display:none;}
-.blurred {filter:blur(5px);transition:filter 0.4s ease;}
-.cams {
-    width: 22%;
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* kleinerer Abstand zwischen CAM und Score */
-    align-items: center;
-}
-
-.cam {
-    height: 260px;
-    width: 100%;
+.board-wrapper {
+    width:52%;
+    position:relative;
+    text-align:center;
+    padding:40px 25px 25px;
     background: rgba(0,0,0,0.55);
     border: 3px solid #ff7a18;
     border-radius: 18px;
-    color: #ffae42;
-    font-size: 1.6rem;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-shadow: 0 0 8px black;
+}
+
+/* TITEL */
+.title {
+    position:absolute;
+    top:-85px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:4.8rem;
+    letter-spacing:8px;
+    color:#ffae42;
+    text-shadow:
+        0 0 15px rgba(0,0,0,0.9),
+        0 0 30px rgba(255,140,0,0.4);
+    pointer-events:none;
+}
+
+/* BOARD */
+.board {
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:14px;
+    transition:filter 0.4s ease;
+}
+
+.category {
+    background:linear-gradient(#9b0000,#5a0000);
+    color:#ffae42;
+    padding:14px;
+    border-radius:12px;
+    border:2px solid #ff7a18;
+    font-weight:bold;
+}
+
+.cell {
+    background:linear-gradient(#7a0000,#3a0000);
+    color:#ffae42;
+    padding:22px;
+    font-size:1.8rem;
+    font-weight:bold;
+    border-radius:12px;
+    border:2px solid #ff7a18;
+}
+
+.cell.used {
+    text-decoration:line-through;
+    color:#555;
+    background:rgba(50,50,50,0.6);
+}
+
+.cell.selected {
+    border:2px solid #ffae42;
+    box-shadow:0 0 10px rgba(255,140,0,0.7);
+}
+
+/* OVERLAY */
+.overlay {
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:50;
+}
+
+.question-box {
+    max-width:80%;
+    display:flex;
+    flex-direction:column;
+    gap:35px;
+}
+
+/* 🔥 FRAGE – ETWAS KLEINER */
+.question-container {
+    padding:28px;
+    background:linear-gradient(#7a0000,#3a0000);
+    border-radius:12px;
+    border:2px solid #ff7a18;
+    color:#ffae42;
+    font-size:2.4rem;        /* ⬅ angepasst */
+    font-weight:bold;
+    line-height:1.35;
+}
+
+/* 🔥 ANTWORT – ETWAS KLEINER */
+.answer-box {
+    padding:28px;
+    background:linear-gradient(#7a0000,#3a0000);
+    border:2px solid #ff7a18;
+    border-radius:12px;
+    color:#00ff99;
+    font-size:2.8rem;        /* ⬅ angepasst */
+    font-weight:bold;
+    line-height:1.35;
+}
+
+
+.hidden {display:none;}
+.blurred {filter:blur(5px);}
+
+/* CAMS */
+.cams {
+    width:22%;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+    align-items:center;
+}
+
+.cam {
+    height:260px;
+    width:100%;
+    background:rgba(0,0,0,0.55);
+    border:3px solid #ff7a18;
+    border-radius:18px;
+    color:#ffae42;
+    font-size:1.6rem;
+    font-weight:bold;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .player-score {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #00ff99;
-    text-shadow: 0 0 6px black;
-    text-align: center;
-    margin-bottom: 15px; /* Abstand zwischen Score und nächster CAM */
-    width: 100%;
+    font-size:1.8rem;
+    font-weight:bold;
+    color:#ffae42;
+    margin-bottom:15px;
 }

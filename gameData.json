@@ -209,11 +209,11 @@
     ]
   ],
   "currentQuestion": {
-    "category": "Kategorie C",
-    "points": 200,
-    "question": "Dummy Frage C2?",
-    "answer": "Dummy Antwort C2",
+    "category": "Kategorie E",
+    "points": 400,
+    "question": "Dummy Frage E4?",
+    "answer": "Dummy Antwort E4",
     "status": "selected",
-    "isOpen": false
+    "isOpen": true
   }
 }

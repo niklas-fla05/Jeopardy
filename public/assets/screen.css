@@ -24,10 +24,11 @@ body {
     justify-content:space-between;
 }
 
+/* Board horizontal größer */
 .board-wrapper {
-    width:52%;
-    position:relative;
-    text-align:center;
+    width: 70%; /* vorher 52% */
+    position: relative;
+    text-align: center;
 }
 
 .title {
@@ -191,4 +192,28 @@ body {
     text-shadow:0 0 6px black;
     text-align:center;
     width:100%;
+}
+
+
+
+/* Untere Cam-Reihe */
+.bottom-cams {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* zentriert alles horizontal */
+    gap: 20px;               /* Abstand zwischen Cams */
+    margin-top: 20px;
+    pointer-events: none;    /* kein Klick */
+}
+
+/* Einzelne CAMs unten – komplett transparent */
+.bottom-cams .cam {
+    width: 180px;            /* gleiche Breite wie vorher oder anpassen */
+    height: 260px;           /* gleiche Höhe wie vorher */
+    background: transparent;
+    border: none;
+    color: transparent;
+    text-shadow: none;
+    border-radius: 0;
+    box-shadow: none;
 }

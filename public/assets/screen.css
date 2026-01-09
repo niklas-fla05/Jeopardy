@@ -13,26 +13,27 @@ body {
 .screen {
     height:100%;
     display:flex;
+    flex-direction:column;
     align-items:center;
-    justify-content:center;
+    justify-content:flex-start;
 }
 
 .row {
     width:95%;
     display:flex;
     align-items:flex-start;
-    justify-content:space-between;
+    justify-content:center;
 }
 
-/* Board horizontal größer */
+/* BOARD */
 .board-wrapper {
-    width: 70%; /* vorher 52% */
+    width: 70%;
     position: relative;
     text-align: center;
 }
 
 .title {
-    font-size:4rem; /* größer */
+    font-size:4rem;
     color:#ffae42;
     margin-bottom:18px;
     letter-spacing:5px;
@@ -44,7 +45,7 @@ body {
     grid-template-columns:repeat(5,1fr);
     gap:14px;
     transition:filter 0.4s ease;
-    border:2px solid #ff7a18; /* Rahmen um das Board */
+    border:2px solid #ff7a18;
     padding:10px;
     border-radius:12px;
 }
@@ -82,6 +83,7 @@ body {
     box-shadow:0 0 10px rgba(255,140,0,0.7);
 }
 
+/* Overlay */
 .overlay {
     position:absolute;
     inset:0;
@@ -105,7 +107,7 @@ body {
     border-radius:12px;
     border:2px solid #ff7a18;
     color:#ffae42;
-    font-size:1.8rem; /* etwas kleiner */
+    font-size:1.8rem;
     font-weight:bold;
 }
 
@@ -115,7 +117,7 @@ body {
     border:2px solid #ff7a18;
     border-radius:12px;
     color:#00ff99;
-    font-size:2rem; /* leicht kleiner als vorher */
+    font-size:2rem;
     font-weight:bold;
 }
 
@@ -128,92 +130,40 @@ body {
     transition:filter 0.4s ease;
 }
 
-/* CAMs */
-.cams {
-    width:22%;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-
-.left-cams {
-    justify-content:flex-start;
-}
-
-.left-cams .cam {
-    margin-bottom:10px;
-}
-
-.left-cams .player-score {
-    margin-bottom:30px; /* Abstand zwischen CAMs */
-}
-
-/* CAM 2 weiter nach unten für vertikale Staffelung */
-.left-cams .cam:nth-of-type(3) {
-    margin-top:40px;
-}
-
-/* Host CAM unten */
-.cam.host-cam {
-    margin-top:20px;
-}
-
-.right-cams .cam {
-    margin-bottom:10px;
-}
-
-.right-cams .player-score {
-    margin-bottom:30px;
-}
-
-/* allgemeine CAM Styles */
-.cam {
-    height: 260px;
-    width: 100%;
-
-    background: #00ff00;              /* GREENSREEN */
-    border: 5px solid #ff7a18;        /* Rahmen bleibt */
-    border-radius: 18px;
-
-    color: transparent;               /* kein Text */
-    font-size: 0;
-    text-shadow: none;
-
-    display: block;                   /* kein Flex-Inhalt */
-    pointer-events: none;             /* OBS klickt durch */
-}
-
-
-
-.player-score {
-    font-size:1.8rem;
-    font-weight:bold;
-    color:#ffae42;
-    text-shadow:0 0 6px black;
-    text-align:center;
-    width:100%;
-}
-
-
-
-/* Untere Cam-Reihe */
 .bottom-cams {
     width: 100%;
     display: flex;
-    justify-content: center; /* zentriert alles horizontal */
-    gap: 20px;               /* Abstand zwischen Cams */
+    justify-content: center;
+    gap: 20px;
     margin-top: 20px;
-    pointer-events: none;    /* kein Klick */
+    pointer-events: none;
 }
 
-/* Einzelne CAMs unten – komplett transparent */
+.cam-wrapper {
+    display: flex;
+    flex-direction: column; /* Cam oben, Score unten */
+    align-items: center;    /* horizontal zentriert */
+    width: 22%;             /* gleiche Breite wie vorher */
+}
+
 .bottom-cams .cam {
-    width: 180px;            /* gleiche Breite wie vorher oder anpassen */
-    height: 260px;           /* gleiche Höhe wie vorher */
-    background: transparent;
-    border: none;
-    color: transparent;
-    text-shadow: none;
-    border-radius: 0;
-    box-shadow: none;
+    width: 100%;
+    height: 260px;
+    background: #00ff00;
+    border: 5px solid #ff7a18;
+    border-radius: 18px;
+}
+
+.bottom-cams .host-cam {
+    border-color: #ffae42;
+}
+
+.player-score {
+    margin-top: 10px;       /* Abstand zur Cam */
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffae42;
+    text-shadow: 0 0 6px black;
+    text-align: center;
+    width: 100%;
 }

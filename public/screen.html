@@ -9,18 +9,6 @@
 
 <div class="screen">
     <div class="row">
-
-        <!-- LEFT CAMS -->
-        <div class="cams left-cams">
-            <div class="cam"></div>
-            <div class="player-score" id="score1">Punkte: 0</div>
-
-            <div class="cam"></div>
-            <div class="player-score" id="score2">Punkte: 0</div>
-
-            <div class="cam host-cam"></div>
-        </div>
-
         <!-- BOARD -->
         <div class="board-wrapper">
             <h1 class="title">JEOPARDY</h1>
@@ -39,20 +27,41 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- RIGHT CAMS -->
-        <div class="cams right-cams">
+    <!-- BOTTOM CAMS (Spieler + Host) -->
+    <!-- BOTTOM CAMS (Spieler + Host) -->
+    <div class="bottom-cams">
+        <div class="cam-wrapper">
+            <div class="cam"></div>
+            <div class="player-score" id="score1">Punkte: 0</div>
+        </div>
+
+        <div class="cam-wrapper">
+            <div class="cam"></div>
+            <div class="player-score" id="score2">Punkte: 0</div>
+        </div>
+
+        <div class="cam-wrapper">
+            <div class="cam host-cam"></div>
+            <div class="player-score" id="scoreHost">Host</div>
+        </div>
+
+        <div class="cam-wrapper">
             <div class="cam"></div>
             <div class="player-score" id="score3">Punkte: 0</div>
+        </div>
 
+        <div class="cam-wrapper">
             <div class="cam"></div>
             <div class="player-score" id="score4">Punkte: 0</div>
         </div>
-
     </div>
+
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/src/screen.js"></script>
+
 </body>
 </html>

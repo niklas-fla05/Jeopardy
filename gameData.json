@@ -210,10 +210,10 @@
   ],
   "currentQuestion": {
     "category": "Kategorie C",
-    "points": 400,
-    "question": "Dummy Frage C4?",
-    "answer": "Dummy Antwort C4",
+    "points": 300,
+    "question": "Dummy Frage C3?",
+    "answer": "Dummy Antwort C3",
     "status": "selected",
-    "isOpen": true
+    "isOpen": false
   }
 }

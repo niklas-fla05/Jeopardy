@@ -109,7 +109,7 @@
         "points": 200,
         "question": "Nenne alle Emotionen aus dem Film ‚Alles steht Kopf‘.",
         "answer": "Freude, Trauer, Wut, Ekel, Angst",
-        "status": "available"
+        "status": "used"
       },
       {
         "category": "Filme",
@@ -160,7 +160,7 @@
         "points": 400,
         "question": "In ‚Elden Ring‘: Wie lautet der vollständige Name der Hexe, die den Spieler auf seiner Reise durch das Tribunal unterstützt und eine der Hauptfiguren der Story ist?",
         "answer": "Ranni, die Blaue Hexe",
-        "status": "available"
+        "status": "used"
       },
       {
         "category": "Souls",
@@ -183,7 +183,7 @@
         "points": 200,
         "question": "In welchem Jahr begann die Französische Revolution?",
         "answer": "1789",
-        "status": "available"
+        "status": "used"
       },
       {
         "category": "Algemeinwissen",
@@ -204,16 +204,16 @@
         "points": 500,
         "question": "Wie heißt die Theorie von Albert Einstein, die die Beziehung von Raum, Zeit und Gravitation beschreibt?",
         "answer": "Allgemeine Relativitätstheorie",
-        "status": "available"
+        "status": "used"
       }
     ]
   ],
   "currentQuestion": {
-    "category": "Algemeinwissen",
-    "points": 500,
-    "question": "Wie heißt die Theorie von Albert Einstein, die die Beziehung von Raum, Zeit und Gravitation beschreibt?",
-    "answer": "Allgemeine Relativitätstheorie",
+    "category": "Gaming",
+    "points": 400,
+    "question": "In ‚The Legend of Zelda: Ocarina of Time‘ gibt es ein Item, das Link nur in einem bestimmten Minispiel bekommt und das ihn schneller laufen lässt. Wie heißt es?",
+    "answer": "Hover Boots",
     "status": "selected",
-    "isOpen": false
+    "isOpen": true
   }
 }

@@ -1,45 +1,51 @@
-* {margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
 
 body {
     height:100vh;
-    background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.75)),
-                url("/assets/background.jpg") center/cover no-repeat;
+    background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.75)), url("/assets/background.jpg") center/cover no-repeat;
 }
 
-.screen {height:100%;display:flex;align-items:center;justify-content:center;}
-.row {width:95%;display:flex;align-items:flex-start;justify-content:space-between;}
+.screen {
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.row {
+    width:95%;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+}
 
 .board-wrapper {
     width:52%;
     position:relative;
     text-align:center;
-    padding:40px 25px 25px;
-    background: rgba(0,0,0,0.55);
-    border: 3px solid #ff7a18;
-    border-radius: 18px;
 }
 
-/* TITEL */
 .title {
-    position:absolute;
-    top:-85px;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:4.8rem;
-    letter-spacing:8px;
+    font-size:4rem; /* größer */
     color:#ffae42;
-    text-shadow:
-        0 0 15px rgba(0,0,0,0.9),
-        0 0 30px rgba(255,140,0,0.4);
-    pointer-events:none;
+    margin-bottom:18px;
+    letter-spacing:5px;
+    text-shadow:0 0 12px rgba(0,0,0,0.9);
 }
 
-/* BOARD */
 .board {
     display:grid;
     grid-template-columns:repeat(5,1fr);
     gap:14px;
     transition:filter 0.4s ease;
+    border:2px solid #ff7a18; /* Rahmen um das Board */
+    padding:10px;
+    border-radius:12px;
 }
 
 .category {
@@ -49,6 +55,7 @@ body {
     border-radius:12px;
     border:2px solid #ff7a18;
     font-weight:bold;
+    text-align:center;
 }
 
 .cell {
@@ -59,12 +66,14 @@ body {
     font-weight:bold;
     border-radius:12px;
     border:2px solid #ff7a18;
+    position:relative;
 }
 
 .cell.used {
     text-decoration:line-through;
     color:#555;
     background:rgba(50,50,50,0.6);
+    cursor:default;
 }
 
 .cell.selected {
@@ -72,7 +81,6 @@ body {
     box-shadow:0 0 10px rgba(255,140,0,0.7);
 }
 
-/* OVERLAY */
 .overlay {
     position:absolute;
     inset:0;
@@ -83,53 +91,85 @@ body {
 }
 
 .question-box {
-    max-width:80%;
+    max-width:75%;
+    text-align:center;
     display:flex;
     flex-direction:column;
-    gap:35px;
+    gap:25px;
 }
 
-/* 🔥 FRAGE – ETWAS KLEINER */
 .question-container {
-    padding:28px;
+    padding:20px;
     background:linear-gradient(#7a0000,#3a0000);
     border-radius:12px;
     border:2px solid #ff7a18;
     color:#ffae42;
-    font-size:2.4rem;        /* ⬅ angepasst */
+    font-size:1.8rem; /* etwas kleiner */
     font-weight:bold;
-    line-height:1.35;
 }
 
-/* 🔥 ANTWORT – ETWAS KLEINER */
 .answer-box {
-    padding:28px;
+    padding:20px;
     background:linear-gradient(#7a0000,#3a0000);
     border:2px solid #ff7a18;
     border-radius:12px;
     color:#00ff99;
-    font-size:2.8rem;        /* ⬅ angepasst */
+    font-size:2rem; /* leicht kleiner als vorher */
     font-weight:bold;
-    line-height:1.35;
 }
 
+.hidden {
+    display:none;
+}
 
-.hidden {display:none;}
-.blurred {filter:blur(5px);}
+.blurred {
+    filter:blur(5px);
+    transition:filter 0.4s ease;
+}
 
-/* CAMS */
+/* CAMs */
 .cams {
     width:22%;
     display:flex;
     flex-direction:column;
-    gap:15px;
     align-items:center;
 }
 
+.left-cams {
+    justify-content:flex-start;
+}
+
+.left-cams .cam {
+    margin-bottom:10px;
+}
+
+.left-cams .player-score {
+    margin-bottom:30px; /* Abstand zwischen CAMs */
+}
+
+/* CAM 2 weiter nach unten für vertikale Staffelung */
+.left-cams .cam:nth-of-type(3) {
+    margin-top:40px;
+}
+
+/* Host CAM unten */
+.cam.host-cam {
+    margin-top:20px;
+}
+
+.right-cams .cam {
+    margin-bottom:10px;
+}
+
+.right-cams .player-score {
+    margin-bottom:30px;
+}
+
+/* allgemeine CAM Styles */
 .cam {
     height:260px;
     width:100%;
-    background:rgba(0,0,0,0.55);
+    background: rgba(0,0,0,0.55);
     border:3px solid #ff7a18;
     border-radius:18px;
     color:#ffae42;
@@ -138,11 +178,14 @@ body {
     display:flex;
     align-items:center;
     justify-content:center;
+    text-shadow:0 0 8px black;
 }
 
 .player-score {
     font-size:1.8rem;
     font-weight:bold;
     color:#ffae42;
-    margin-bottom:15px;
+    text-shadow:0 0 6px black;
+    text-align:center;
+    width:100%;
 }

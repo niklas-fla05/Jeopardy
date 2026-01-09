@@ -70,13 +70,21 @@ function closeQuestion() {
 }
 
 // Punkte aktualisieren
+// Spieler-Namen und Scores aktualisieren
 function updateCamScores(players) {
     if (!players || players.length === 0) return;
+
     players.forEach((p, i) => {
-        const el = camScores[i];
-        if (el) el.textContent = `Punkte: ${p.score}`;
+        // Score aktualisieren
+        const scoreEl = camScores[i];
+        if (scoreEl) scoreEl.textContent = `Punkte: ${p.score}`;
+
+        // Name aktualisieren
+        const nameEl = document.querySelectorAll(".name-slot")[i];
+        if (nameEl) nameEl.textContent = p.name;
     });
 }
+
 
 // SOCKET EVENTS
 socket.on("gameState", data => {

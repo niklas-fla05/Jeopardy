@@ -11,7 +11,6 @@ const io = new Server(server);
 const PORT = 3000;
 const DATA_FILE = path.join(__dirname, "gameData.json");
 
-// Board erstellen
 function createBoardFromJSON(json) {
     const board = [];
     json.categories.forEach(cat => {
@@ -34,7 +33,6 @@ function createDummyBoard() {
     return createBoardFromJSON(require("./public/example-board.json"));
 }
 
-// Standard-Spieler
 const defaultPlayers = [
     { id: 1, name: "Spieler 1", score: 0 },
     { id: 2, name: "Spieler 2", score: 0 },
@@ -42,19 +40,16 @@ const defaultPlayers = [
     { id: 4, name: "Spieler 4", score: 0 }
 ];
 
-// Game Data initial
 let gameData = {
     players: [...defaultPlayers],
     boardState: [],
     currentQuestion: { isOpen: false }
 };
 
-// Speichern
 function saveGame() {
     fs.writeFileSync(DATA_FILE, JSON.stringify(gameData, null, 2));
 }
 
-// Lade Spiel, falls Datei existiert
 if (fs.existsSync(DATA_FILE)) {
     try {
         const loaded = JSON.parse(fs.readFileSync(DATA_FILE));
@@ -81,7 +76,6 @@ io.on("connection", socket => {
         socket.emit("gameState", gameData);
     });
 
-    // Punkte ändern für Spieler
     socket.on("updateScore", ({ playerId, delta }) => {
         const p = gameData.players.find(p => p.id === playerId);
         if (!p) return;
@@ -108,7 +102,6 @@ io.on("connection", socket => {
             return;
         }
 
-        // Demo: Player 1 bekommt Punkte bei richtig
         if (correct && gameData.players[0]) {
             gameData.players[0].score += q.points;
             console.log(`Server: Player 1 bekommt ${q.points} Punkte (jetzt ${gameData.players[0].score})`);
@@ -153,7 +146,6 @@ io.on("connection", socket => {
     });
 
     socket.on("hostRevealAnswer", ({ question }) => {
-        // An alle Screens senden
         io.emit("screenRevealAnswer", { question });
     });
 

@@ -167,19 +167,21 @@ body {
 
 /* allgemeine CAM Styles */
 .cam {
-    height:260px;
-    width:100%;
-    background: rgba(0,0,0,0.55);
-    border:3px solid #ff7a18;
-    border-radius:18px;
-    color:#ffae42;
-    font-size:1.6rem;
-    font-weight:bold;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-shadow:0 0 8px black;
+    height: 260px;
+    width: 100%;
+    background: transparent;          /* WICHTIG */
+    border: 3px solid #ff7a18;         /* Rahmen bleibt sichtbar */
+    border-radius: 18px;
+    color: #ffae42;
+    font-size: 1.6rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 0 8px black;
+    pointer-events: none;              /* klickt nichts weg */
 }
+
 
 .player-score {
     font-size:1.8rem;

@@ -103,7 +103,7 @@ io.on("connection", socket => {
         }
 
         if (correct && gameData.players[0]) {
-            gameData.players[0].score += q.points;
+            
             console.log(`Server: Player 1 bekommt ${q.points} Punkte (jetzt ${gameData.players[0].score})`);
         }
 
@@ -153,6 +153,17 @@ io.on("connection", socket => {
     socket.on("closeGame", () => {
         saveGame();
         console.log("Server: Spiel geschlossen, Daten gespeichert.");
+    });
+
+    socket.on("updatePlayerName", ({ playerId, name }) => {
+        const player = gameData.players.find(p => p.id === playerId);
+        if (!player) return;
+
+        player.name = name;
+        console.log(`Server: Spieler ${playerId} heißt jetzt ${name}`);
+
+        saveGame();
+        io.emit("playersUpdate", gameData.players);
     });
 
     socket.on("uploadBoardJSON", json => {

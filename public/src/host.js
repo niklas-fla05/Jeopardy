@@ -49,9 +49,20 @@ function renderPlayerControls() {
         const row = document.createElement("div");
         row.className = "player-row";
 
-        const nameSpan = document.createElement("span");
-        nameSpan.id = `player-${player.id}-score`;
-        nameSpan.textContent = `${player.name} – Punkte: ${player.score}`;
+        const nameInput = document.createElement("input");
+        nameInput.value = player.name;
+        nameInput.style.width = "160px";
+
+        nameInput.onchange = () => {
+            socket.emit("updatePlayerName", {
+            playerId: player.id,
+            name: nameInput.value
+        });
+    };
+
+        const scoreSpan = document.createElement("span");
+        scoreSpan.id = `player-${player.id}-score`;
+        scoreSpan.textContent = `Punkte: ${player.score}`;
 
         // +100 Button
         const plusBtn = document.createElement("button");
@@ -64,9 +75,11 @@ function renderPlayerControls() {
         minusBtn.className = "btn-danger";
         minusBtn.onclick = () => socket.emit("updateScore", { playerId: player.id, delta: -100 });
 
-        row.appendChild(nameSpan);
+        row.appendChild(nameInput);
+        row.appendChild(scoreSpan);
         row.appendChild(plusBtn);
         row.appendChild(minusBtn);
+
 
         container.appendChild(row);
     });
@@ -77,7 +90,9 @@ function updatePlayerScoreUI(playerId, score) {
     const el = document.getElementById(`player-${playerId}-score`);
     if (el) {
         const player = players.find(p => p.id === playerId);
-        el.textContent = `${player.name} – Punkte: ${score}`;
+        
+        el.textContent = `Punkte: ${score}`;
+
     }
 }
 

@@ -2,12 +2,12 @@
   "players": [
     {
       "id": 1,
-      "name": "Spieler 1",
+      "name": "Lecker",
       "score": 0
     },
     {
       "id": 2,
-      "name": "Spieler 2",
+      "name": "Flauschi",
       "score": 0
     },
     {
@@ -109,7 +109,7 @@
         "points": 200,
         "question": "Dummy Frage C2?",
         "answer": "Dummy Antwort C2",
-        "status": "available"
+        "status": "used"
       },
       {
         "category": "Kategorie C",
@@ -210,9 +210,9 @@
   ],
   "currentQuestion": {
     "category": "Kategorie C",
-    "points": 300,
-    "question": "Dummy Frage C3?",
-    "answer": "Dummy Antwort C3",
+    "points": 200,
+    "question": "Dummy Frage C2?",
+    "answer": "Dummy Antwort C2",
     "status": "selected",
     "isOpen": false
   }

@@ -74,16 +74,23 @@ function closeQuestion() {
 function updateCamScores(players) {
     if (!players || players.length === 0) return;
 
-    players.forEach((p, i) => {
-        // Score aktualisieren
-        const scoreEl = camScores[i];
-        if (scoreEl) scoreEl.textContent = `Punkte: ${p.score}`;
+    const nameSlots = document.querySelectorAll(".name-slot");
 
-        // Name aktualisieren
-        const nameEl = document.querySelectorAll(".name-slot")[i];
+    players.forEach((p, playerIndex) => {
+        // Slot-Index berechnen (Host bei Index 2 überspringen)
+        const slotIndex = playerIndex < 2 ? playerIndex : playerIndex + 1;
+
+        // Name setzen
+        const nameEl = nameSlots[slotIndex];
         if (nameEl) nameEl.textContent = p.name;
+
+        // Score setzen
+        const scoreEl = camScores[playerIndex];
+        if (scoreEl) scoreEl.textContent = `Punkte: ${p.score}`;
     });
 }
+
+
 
 
 // SOCKET EVENTS

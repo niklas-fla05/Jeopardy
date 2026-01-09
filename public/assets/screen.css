@@ -169,18 +169,19 @@ body {
 .cam {
     height: 260px;
     width: 100%;
-    background: transparent;          /* WICHTIG */
-    border: 3px solid #ff7a18;         /* Rahmen bleibt sichtbar */
+
+    background: #00ff00;              /* GREENSREEN */
+    border: 3px solid #ff7a18;        /* Rahmen bleibt */
     border-radius: 18px;
-    color: #ffae42;
-    font-size: 1.6rem;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-shadow: 0 0 8px black;
-    pointer-events: none;              /* klickt nichts weg */
+
+    color: transparent;               /* kein Text */
+    font-size: 0;
+    text-shadow: none;
+
+    display: block;                   /* kein Flex-Inhalt */
+    pointer-events: none;             /* OBS klickt durch */
 }
+
 
 
 .player-score {

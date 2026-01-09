@@ -10,13 +10,16 @@ body {
     background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.75)), url("/assets/background.jpg") center/cover no-repeat;
 }
 
+/* SCREEN CONTAINER */
 .screen {
-    height:100%;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:flex-start;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 10px; /* vorher 50px → weniger, damit der Titel oben ist */
 }
+
 
 .row {
     width:95%;
@@ -25,35 +28,40 @@ body {
     justify-content:center;
 }
 
-/* BOARD */
+/* BOARD WRAPPER */
 .board-wrapper {
     width: 70%;
     position: relative;
     text-align: center;
+    margin-top: 150px; /* Verschiebt das Board nach unten, unter den Titel */
 }
 
-/* PNG als Titel */
-/* Container für Titel PNG */
+
+/* TITEL PNG */
+/* TITEL PNG – absolut positioniert oben */
 .title-container {
-    width: 100%;
-    max-width: 800px;       /* maximale Breite */
-    height: 150px;          /* Höhe des Containers */
-    overflow: hidden;       /* Bildteile außerhalb werden abgeschnitten */
-    margin: 40px auto 20px auto; /* Oben mehr Platz (40px), unten 20px */
-    display: flex;
-    align-items: center;    /* Bild vertikal zentriert im Container */
-    justify-content: center; /* horizontal zentriert */
+    position: absolute;
+    top: -230px;            /* nach oben verschoben, über den Rand hinaus */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1200px;          /* Breite beibehalten */
+    height: 350px;          /* Höhe des sichtbaren Bereichs */
+    overflow: visible;      /* damit der Teil über dem Rand sichtbar bleibt */
+    z-index: 10;
+    display: block;         /* kein flex */
 }
 
 .title-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;      /* proportional, nur oben/unten beschnitten */
+    object-fit: contain;
 }
 
 
 
 
+
+/* BOARD */
 .board {
     display:grid;
     grid-template-columns:repeat(5,1fr);
@@ -149,17 +157,16 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
-    gap: 15px;
-    margin-top: 50px; /* weiter runter schieben */
-    margin-bottom: 30px;
-    pointer-events: none;
+    gap: 20px;
+    margin-top: 50px;       /* Abstand vom Board nach unten */
+    margin-bottom: 30px;    /* Abstand zum unteren Bildschirmrand */
 }
 
 .cam-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 16%; /* schmaler als vorher */
+    width: 18%;
 }
 
 .name-slot {
@@ -173,14 +180,10 @@ body {
 
 .bottom-cams .cam {
     width: 100%;
-    height: 260px;
+    height: 200px;          /* nicht zu hoch */
     background: #00ff00;
     border: 5px solid #ff7a18;
     border-radius: 18px;
-}
-
-.bottom-cams .host-cam {
-    border-color: #ffae42;
 }
 
 .player-score {
@@ -192,3 +195,4 @@ body {
     text-align: center;
     width: 100%;
 }
+

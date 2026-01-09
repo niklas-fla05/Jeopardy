@@ -11,7 +11,14 @@
     <div class="row">
         <!-- BOARD -->
         <div class="board-wrapper">
-            <h1 class="title">JEOPARDY</h1>
+            <!-- Titel ersetzt durch PNG -->
+            
+            <!-- Titel PNG -->
+            <div class="title-container">
+                <img src="/assets/titel.png" alt="Jeopardy" class="title-image">
+            </div>
+
+            
             <div class="board" id="boardContainer">
                 <!-- Kategorien & Zellen werden dynamisch geladen -->
             </div>
@@ -30,38 +37,40 @@
     </div>
 
     <!-- BOTTOM CAMS (Spieler + Host) -->
-    <!-- BOTTOM CAMS (Spieler + Host) -->
     <div class="bottom-cams">
         <div class="cam-wrapper">
+            <div class="name-slot">Player 1</div>
             <div class="cam"></div>
             <div class="player-score" id="score1">Punkte: 0</div>
         </div>
 
         <div class="cam-wrapper">
+            <div class="name-slot">Player 2</div>
             <div class="cam"></div>
             <div class="player-score" id="score2">Punkte: 0</div>
         </div>
 
         <div class="cam-wrapper">
+            <div class="name-slot">Host</div>
             <div class="cam host-cam"></div>
-            <div class="player-score" id="scoreHost">Host</div>
+            <div class="player-score" id="scoreHost">0</div>
         </div>
 
         <div class="cam-wrapper">
+            <div class="name-slot">Player 3</div>
             <div class="cam"></div>
             <div class="player-score" id="score3">Punkte: 0</div>
         </div>
 
         <div class="cam-wrapper">
+            <div class="name-slot">Player 4</div>
             <div class="cam"></div>
             <div class="player-score" id="score4">Punkte: 0</div>
         </div>
     </div>
-
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/src/screen.js"></script>
-
 </body>
 </html>

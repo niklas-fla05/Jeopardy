@@ -2,6 +2,9 @@ const socket = io();
 let players = [];
 let boardState = [];
 let currentCell = null;
+let buzzerInfoEl;
+
+
 
 // --- Board rendern ---
 function renderBoard() {
@@ -32,18 +35,8 @@ function renderPlayerControls() {
     container.innerHTML = "";
 
     const title = document.createElement("h2");
-    title.textContent = "Spieler Punkte";
+    title.textContent = "Spieler / Cams";
     container.appendChild(title);
-
-    // 4 Spieler sicherstellen
-    if (players.length === 0) {
-        players = [
-            { id: 1, name: "Spieler 1", score: 0 },
-            { id: 2, name: "Spieler 2", score: 0 },
-            { id: 3, name: "Spieler 3", score: 0 },
-            { id: 4, name: "Spieler 4", score: 0 }
-        ];
-    }
 
     players.forEach(player => {
         const row = document.createElement("div");
@@ -52,38 +45,44 @@ function renderPlayerControls() {
         const nameInput = document.createElement("input");
         nameInput.value = player.name;
         nameInput.style.width = "160px";
-
         nameInput.onchange = () => {
             socket.emit("updatePlayerName", {
-            playerId: player.id,
-            name: nameInput.value
-        });
-    };
+                playerId: player.id,
+                name: nameInput.value
+            });
+        };
 
         const scoreSpan = document.createElement("span");
         scoreSpan.id = `player-${player.id}-score`;
         scoreSpan.textContent = `Punkte: ${player.score}`;
 
-        // +100 Button
+        const link = document.createElement("a");
+        link.href = getPlayerLink(player.id);
+        link.textContent = "Player öffnen";
+        link.target = "_blank";
+        link.style.color = "#ffae42";
+
         const plusBtn = document.createElement("button");
         plusBtn.textContent = "+100";
-        plusBtn.onclick = () => socket.emit("updateScore", { playerId: player.id, delta: 100 });
+        plusBtn.onclick = () =>
+            socket.emit("updateScore", { playerId: player.id, delta: 100 });
 
-        // -100 Button
         const minusBtn = document.createElement("button");
         minusBtn.textContent = "-100";
         minusBtn.className = "btn-danger";
-        minusBtn.onclick = () => socket.emit("updateScore", { playerId: player.id, delta: -100 });
+        minusBtn.onclick = () =>
+            socket.emit("updateScore", { playerId: player.id, delta: -100 });
 
         row.appendChild(nameInput);
         row.appendChild(scoreSpan);
+        row.appendChild(link);
         row.appendChild(plusBtn);
         row.appendChild(minusBtn);
-
 
         container.appendChild(row);
     });
 }
+
 
 // --- Punkte live aktualisieren ---
 function updatePlayerScoreUI(playerId, score) {
@@ -124,6 +123,11 @@ function markAnswer(correct) {
     currentCell = null;
 }
 
+function unlockBuzzer() {
+    socket.emit("unlockBuzzer");
+}
+
+
 // --- Frage zurücksetzen ---
 function resetQuestion() {
     if (!currentCell) return;
@@ -141,6 +145,11 @@ function uploadJSON() {
     reader.readAsText(file);
 }
 
+function getPlayerLink(camId) {
+    return `${window.location.origin}/player?cam=${camId}`;
+}
+
+
 // --- Socket Events ---
 socket.on("gameState", data => {
     players = data.players.length ? data.players : [
@@ -153,6 +162,14 @@ socket.on("gameState", data => {
     renderBoard();
     renderPlayerControls();
     if (data.currentQuestion?.isOpen) openQuestion(data.currentQuestion);
+});
+
+socket.on("buzzerUnlocked", () => {
+    buzzerInfoEl.textContent = "Buzzer: frei";
+});
+
+socket.on("buzzerLocked", ({ camId, name }) => {
+    buzzerInfoEl.textContent = `Gebuzzert: CAM ${camId} – ${name}`;
 });
 
 // Punkte live aktualisieren
@@ -170,3 +187,7 @@ socket.on("hostAnswer", ({ correct, question }) => {
 });
 
 socket.emit("requestGameState");
+
+document.addEventListener("DOMContentLoaded", () => {
+    buzzerInfoEl = document.getElementById("buzzerInfo");
+});

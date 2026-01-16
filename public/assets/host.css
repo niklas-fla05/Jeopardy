@@ -119,18 +119,6 @@ body {
     margin-bottom: 15px;
 }
 
-.player-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.player-row span {
-    flex: 1;
-    font-weight: bold;
-}
-
 .player-row button {
     padding: 6px 12px;
     border-radius: 6px;
@@ -151,3 +139,19 @@ body {
     border-color: #ff4500;
 }
 
+.player-row a {
+    font-weight:bold;
+    text-decoration:none;
+    margin-right:10px;
+}
+.player-row a:hover {
+    text-decoration:underline;
+}
+
+.buzzer-status {
+    margin-top:20px;
+    padding:15px;
+    background:rgba(0,0,0,0.85);
+    border-radius:12px;
+    text-align:center;
+}

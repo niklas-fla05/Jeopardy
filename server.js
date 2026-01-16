@@ -11,6 +11,10 @@ const io = new Server(server);
 const PORT = 3000;
 const DATA_FILE = path.join(__dirname, "gameData.json");
 
+let buzzerLocked = false;
+let buzzedCam = null;
+
+
 function createBoardFromJSON(json) {
     const board = [];
     json.categories.forEach(cat => {
@@ -85,6 +89,29 @@ io.on("connection", socket => {
         saveGame();
         io.emit("playersUpdate", gameData.players);
     });
+
+    socket.on("buzz", ({ camId }) => {
+        if (buzzerLocked) return;
+
+        const player = gameData.players.find(p => p.id === camId);
+        if (!player) return;
+
+        buzzerLocked = true;
+        buzzedCam = camId;
+
+        io.emit("buzzerLocked", {
+            camId,
+            name: player.name
+        });
+    });
+
+    socket.on("unlockBuzzer", () => {
+        buzzerLocked = false;
+        buzzedCam = null;
+        io.emit("buzzerUnlocked");
+    });
+
+
 
     socket.on("hostSelectQuestion", cell => {
         cell.status = "selected";
@@ -184,6 +211,10 @@ app.get("/host", (_, res) =>
 
 app.get("/screen", (_, res) =>
     res.sendFile(path.join(__dirname, "public/screen.html"))
+);
+
+app.get("/player", (_, res) =>
+    res.sendFile(path.join(__dirname, "public/player.html"))
 );
 
 server.listen(PORT, () =>

@@ -15,9 +15,10 @@ const camScores = [
     document.getElementById("score4")
 ];
 
-camScores.forEach((el, i) => {
-    if (!el) console.warn(`Cam Score Element score${i+1} existiert nicht im DOM`);
-});
+// Alle Cam-Divs
+const camWrappers = document.querySelectorAll(".cam-wrapper");
+const cams = document.querySelectorAll(".cam");
+
 
 // Board rendern
 function renderBoard(boardState) {
@@ -47,9 +48,8 @@ function renderBoard(boardState) {
     }
 }
 
-// Overlay Funktionen
+// Overlay
 function showQuestion(q) {
-    if (!overlay) return;
     overlay.classList.remove("hidden");
     qCategory.textContent = q.category;
     qPoints.textContent = q.points;
@@ -59,55 +59,56 @@ function showQuestion(q) {
     boardContainer.classList.add("blurred");
 }
 
-function revealAnswer() {
-    qAnswer.classList.remove("hidden");
-}
-
 function closeQuestion() {
-    if (!overlay) return;
     overlay.classList.add("hidden");
     boardContainer.classList.remove("blurred");
 }
 
-// Punkte aktualisieren
-// Spieler-Namen und Scores aktualisieren
+// Namen + Punkte
 function updateCamScores(players) {
-    if (!players || players.length === 0) return;
+    if (!players) return;
 
     const nameSlots = document.querySelectorAll(".name-slot");
 
-    players.forEach((p, playerIndex) => {
-        // Slot-Index berechnen (Host bei Index 2 überspringen)
-        const slotIndex = playerIndex < 2 ? playerIndex : playerIndex + 1;
-
-        // Name setzen
-        const nameEl = nameSlots[slotIndex];
-        if (nameEl) nameEl.textContent = p.name;
-
-        // Score setzen
-        const scoreEl = camScores[playerIndex];
-        if (scoreEl) scoreEl.textContent = `Punkte: ${p.score}`;
+    players.forEach((p, i) => {
+        const slotIndex = i < 2 ? i : i + 1;
+        if (nameSlots[slotIndex]) nameSlots[slotIndex].textContent = p.name;
+        if (camScores[i]) camScores[i].textContent = `Punkte: ${p.score}`;
     });
 }
 
 
+// =======================
+// 🔔 BUZZER VISUALS
+// =======================
+
+// Wenn jemand buzzert → roter Rand + Glow
+socket.on("buzzerLocked", ({ camId }) => {
+    cams.forEach((cam, index) => {
+        if (index === camId - 1) {
+            cam.classList.add("buzzed");
+        } else {
+            cam.classList.remove("buzzed");
+        }
+    });
+});
+
+// Wenn wieder freigegeben → alles normal
+socket.on("buzzerUnlocked", () => {
+    cams.forEach(cam => cam.classList.remove("buzzed"));
+});
 
 
 // SOCKET EVENTS
 socket.on("gameState", data => {
-    if (!data) return;
     renderBoard(data.boardState);
     updateCamScores(data.players);
 
-    if (data.currentQuestion?.isOpen) {
-        showQuestion(data.currentQuestion);
-    } else {
-        closeQuestion();
-    }
+    if (data.currentQuestion?.isOpen) showQuestion(data.currentQuestion);
+    else closeQuestion();
 });
 
 socket.on("showQuestion", showQuestion);
-socket.on("hostAnswer", data => { if (data.correct === null && data.question) showQuestion(data.question); });
 socket.on("playersUpdate", updateCamScores);
 socket.on("screenRevealAnswer", data => {
     if (!data?.question) return;
@@ -120,5 +121,4 @@ socket.on("screenRevealAnswer", data => {
     boardContainer.classList.add("blurred");
 });
 
-// initial request
 socket.emit("requestGameState");

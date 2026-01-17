@@ -138,3 +138,4 @@ socket.on("buzzerUnlocked", () => {
    INIT
    ========================= */
 socket.emit("requestGameState");
+socket.emit("registerPlayer");

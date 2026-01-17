@@ -182,6 +182,18 @@ io.on("connection", socket => {
         console.log("Server: Spiel geschlossen, Daten gespeichert.");
     });
 
+    socket.on("registerPlayer", () => {
+        const freePlayer = players.find(p => !p.socketId);
+
+        if (!freePlayer) return;
+
+        freePlayer.socketId = socket.id;
+
+        socket.emit("assignPlayer", {
+            playerId: freePlayer.id
+        });
+    });
+
     socket.on("updatePlayerName", ({ playerId, name }) => {
         const player = gameData.players.find(p => p.id === playerId);
         if (!player) return;

@@ -55,8 +55,8 @@
         },
         {
           "points": 500,
-          "question": "Dieses antike Lichtwesen ist der wahre Endgegner von Hallownest. Er ist nur erreichbar, wenn man die Träume des Hollow Knights mithilfe des Traumnagels betritt.",
-          "answer": "The Radiance"
+          "question": "Wie heißt die Frau des Kartenmachers in Hollow Knight.",
+          "answer": "Iselda"
         }
       ]
     },
@@ -95,9 +95,10 @@
       "questions": [
         {
           "points": 100,
-          "question": "In ‚Dark Souls‘: Wie heißt der NPC, der die Pyromantie-Lehren weitergibt und später in Chaosburg gefangen ist?",
-          "answer": "Laurentius von den Großen Feuer"
+          "question": "In ‚Elden Ring‘: Wie lautet der vollständige Name der Hexe, die den Spieler auf seiner Reise durch das Tribunal unterstützt und eine der Hauptfiguren der Story ist?",
+          "answer": "Ranni, die Hexe"
         },
+        
         {
           "points": 200,
           "question": "Welche Waffe in ‚Bloodborne‘ kann als Säbel und Gewehr zugleich verwendet werden und eignet sich besonders für schnelle Stagger-Angriffe?",
@@ -110,13 +111,13 @@
         },
         {
           "points": 400,
-          "question": "In ‚Elden Ring‘: Wie lautet der vollständige Name der Hexe, die den Spieler auf seiner Reise durch das Tribunal unterstützt und eine der Hauptfiguren der Story ist?",
-          "answer": "Ranni, die Blaue Hexe"
+          "question": "In ‚Dark Souls‘: Wie heißt der NPC, der die Pyromantie-Lehren weitergibt und später in Chaosburg gefangen ist?",
+          "answer": "Laurentius von den Großen Feuer"
         },
         {
           "points": 500,
-          "question": "In ‚Dark Souls‘: Wie heißt die Waffe, die nur vom Artorias des Abgrunds besiegt werden kann und die Fähigkeit hat, Abyss-Schaden zu verursachen?",
-          "answer": "Greatsword of Artorias"
+          "question": "Welcher Ritter fiel dem Abyss zum Opfer und wurde zur Legende von Oolacile",
+          "answer": "Artorias"
         }
       ]
     },
@@ -136,17 +137,17 @@
         {
           "points": 300,
           "question": "Nenne alle Planeten unseres Sonnensystems in der richtigen Reihenfolge von der Sonne aus gesehen.",
-          "answer": "Mercury, Venus, Erde, Mars, Jupiter, Saturn, Uranus, Neptun"
+          "answer": "Mercur, Venus, Erde, Mars, Jupiter, Saturn, Uranus, Neptun"
         },
         {
           "points": 400,
-          "question": "Wie nennt man die politische Richtung, die individuelle Freiheit und freie Marktwirtschaft betont?",
-          "answer": "Liberalismus"
+          "question": "Welches politische System teilt die Macht zwischen Bund und Ländern",
+          "answer": "Föderalismus"
         },
         {
           "points": 500,
-          "question": "Wie heißt die Theorie von Albert Einstein, die die Beziehung von Raum, Zeit und Gravitation beschreibt?",
-          "answer": "Allgemeine Relativitätstheorie"
+          "question": "Welches Element wurde nach dem Wohnort von Marie Curie benannt?",
+          "answer": "Polonium"
         }
       ]
     }

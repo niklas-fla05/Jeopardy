@@ -7,6 +7,7 @@ const qPoints = document.getElementById("qPoints");
 const qQuestion = document.getElementById("qQuestion");
 const qAnswer = document.getElementById("qAnswer");
 
+
 // Cam Scores
 const camScores = [
     document.getElementById("score1"),
@@ -84,14 +85,17 @@ function updateCamScores(players) {
 
 // Wenn jemand buzzert → roter Rand + Glow
 socket.on("buzzerLocked", ({ camId }) => {
-    cams.forEach((cam, index) => {
-        if (index === camId - 1) {
-            cam.classList.add("buzzed");
-        } else {
-            cam.classList.remove("buzzed");
-        }
-    });
+
+    // Alle Buzz-Styles entfernen
+    cams.forEach(cam => cam.classList.remove("buzzed"));
+
+    // Player-ID → Cam-Index (Host überspringen)
+    const camIndex = camId >= 3 ? camId + 1 : camId;
+
+    const cam = cams[camIndex - 1];
+    if (cam) cam.classList.add("buzzed");
 });
+
 
 // Wenn wieder freigegeben → alles normal
 socket.on("buzzerUnlocked", () => {

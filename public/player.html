@@ -1,19 +1,40 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<title>Player Buzzer</title>
-<link rel="stylesheet" href="/assets/player.css">
-<script src="/socket.io/socket.io.js"></script>
+    <meta charset="UTF-8">
+    <title>Jeopardy Player</title>
+    <link rel="stylesheet" href="/assets/player.css">
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
 
-<div class="player-wrapper">
-    <h1 id="playerName">PLAYER</h1>
+<div class="player-root">
 
-    <button id="buzzBtn">BUZZ!</button>
+    <!-- LINKe SEITE: BOARD -->
+    <div class="player-board">
+        <div id="boardContainer" class="board"></div>
+    </div>
 
-    <p class="info">Cam <span id="camId"></span></p>
+    <!-- RECHTE SEITE: FRAGE / ANTWORT / BUZZ -->
+    <div class="player-action">
+
+        <h1 id="playerName">Spieler</h1>
+
+        <div class="qa-box">
+            <div class="question">
+                <h2 id="qCategory"></h2>
+                <h3 id="qPoints"></h3>
+                <p id="qQuestion">Warte auf Frage…</p>
+            </div>
+
+            <div class="answer hidden" id="qAnswer"></div>
+        </div>
+
+        <button id="buzzBtn">BUZZ!</button>
+        <div id="buzzInfo" class="hidden">Buzzer gesperrt</div>
+
+    </div>
+
 </div>
 
 <script src="/src/player.js"></script>

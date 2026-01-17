@@ -146,7 +146,7 @@ function uploadJSON() {
 }
 
 function getPlayerLink(camId) {
-    return `${window.location.origin}/player?cam=${camId}`;
+    return `${window.location.origin}/player?player=${camId}`;
 }
 
 

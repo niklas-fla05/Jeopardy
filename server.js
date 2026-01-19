@@ -11,11 +11,6 @@ const db = require("./db");
 
 const PORT = process.env.PORT || 3000;
 
-
-const DB_PATH = process.env.MONGODB_URI || "mongodb.railway.internal";
-const DB_NAME = "jeopardy";
-
-let db;
 let GameState;
 let Boards;
 

@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
-const db = require("./db");
+const db = require("./src/db");
 
 
 const PORT = process.env.PORT || 3000;
@@ -248,14 +248,12 @@ app.get("/player", (_, res) =>
    START SERVER
 =========================== */
 async function start() {
-  initDB();
-  await loadGameState();
+  await loadGameState(); // db is already ready
   
   server.listen(PORT, () => {
     console.log(`Server läuft auf http://localhost:${PORT}`);
   });
 }
-
 
 start().catch(err => {
   console.error("❌ Server Start Fehler:", err);

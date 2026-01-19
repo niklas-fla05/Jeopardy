@@ -56,6 +56,14 @@ function createBoardFromJSON(json) {
   return board;
 }
 
+async function initDB() {
+    if (!db) {
+        db = await connectToDatabase();
+    }
+    return db;
+}
+
+
 function createDummyBoard() {
   return createBoardFromJSON(require("./public/example-board.json"));
 }
@@ -245,8 +253,9 @@ app.get("/player", (_, res) =>
    START SERVER
 =========================== */
 async function start() {
+  initDB();
   await loadGameState();
-
+  
   server.listen(PORT, () => {
     console.log(`Server läuft auf http://localhost:${PORT}`);
   });

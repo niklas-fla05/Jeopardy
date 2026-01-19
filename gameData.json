@@ -210,9 +210,9 @@
   ],
   "currentQuestion": {
     "category": "Kategorie E",
-    "points": 200,
-    "question": "Dummy Frage E2?",
-    "answer": "Dummy Antwort E2",
+    "points": 400,
+    "question": "Dummy Frage E4?",
+    "answer": "Dummy Antwort E4",
     "status": "selected",
     "isOpen": true
   }

@@ -2,17 +2,16 @@ const express = require("express");
 const path = require("path");
 const http = require("http");
 const { Server } = require("socket.io");
-const { MongoClient } = require("mongodb");
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
+const db = require("./db");
+
 
 const PORT = process.env.PORT || 3000;
 
-/* ===========================
-   MONGO SETUP (Railway)
-=========================== */
+
 const DB_PATH = process.env.MONGODB_URI || "mongodb.railway.internal";
 const DB_NAME = "jeopardy";
 
@@ -65,11 +64,11 @@ function createDummyBoard() {
    GAME STATE DB
 =========================== */
 async function loadGameState() {
-  const doc = await GameState.findOne({ _id: "singleton" });
+  const row = db.prepare("SELECT data FROM game_state WHERE id = 1").get();
 
-  if (doc?.data) {
-    gameData = doc.data;
-    console.log("Server: Game-State aus Mongo geladen");
+  if (row?.data) {
+    gameData = JSON.parse(row.data);
+    console.log("Server: Game-State aus SQLite geladen");
   } else {
     gameData.boardState = createDummyBoard();
     await saveGameState();
@@ -78,12 +77,13 @@ async function loadGameState() {
 }
 
 async function saveGameState() {
-  await GameState.updateOne(
-    { _id: "singleton" },
-    { $set: { data: gameData } },
-    { upsert: true }
-  );
+  const data = JSON.stringify(gameData);
+  db.prepare(`
+    INSERT INTO game_state (id, data) VALUES (1, ?)
+    ON CONFLICT(id) DO UPDATE SET data=excluded.data
+  `).run(data);
 }
+
 
 /* ===========================
    SOCKET.IO
@@ -181,40 +181,38 @@ io.on("connection", socket => {
   /* ===========================
      🗂️ BOARD MANAGER
   =========================== */
-  socket.on("saveBoard", async ({ name, json }) => {
-    const boardState = createBoardFromJSON(json);
+  socket.on("saveBoard", ({ name, json }) => {
+  const boardState = createBoardFromJSON(json);
+  db.prepare(`
+    INSERT INTO boards (name, boardState) VALUES (?, ?)
+    ON CONFLICT(name) DO UPDATE SET boardState=excluded.boardState
+  `).run(name, JSON.stringify(boardState));
 
-    await Boards.updateOne(
-      { name },
-      { $set: { name, boardState } },
-      { upsert: true }
-    );
+  socket.emit("boardSaved", { name });
+  io.emit("boardsUpdated");
+  console.log("Server: Board gespeichert:", name);
+});
 
-    socket.emit("boardSaved", { name });
-    io.emit("boardsUpdated");
-    console.log("Server: Board gespeichert:", name);
-  });
+socket.on("getBoards", () => {
+  const boards = db.prepare("SELECT name FROM boards ORDER BY name").all();
+  socket.emit("boardsList", boards);
+});
 
-  socket.on("getBoards", async () => {
-    const boards = await Boards.find({}, { projection: { name: 1 } })
-      .sort({ name: 1 })
-      .toArray();
+socket.on("loadBoard", ({ name }) => {
+  const row = db.prepare("SELECT boardState FROM boards WHERE name = ?").get(name);
+  if (!row) return;
 
-    socket.emit("boardsList", boards);
-  });
+  gameData.boardState = JSON.parse(row.boardState);
+  gameData.currentQuestion.isOpen = false;
 
-  socket.on("loadBoard", async ({ id }) => {
-    const board = await Boards.findOne({ _id: id });
-    if (!board) return;
+  saveGameState();
+  io.emit("gameState", gameData);
+  console.log("Server: Board geladen:", name);
+});
 
-    gameData.boardState = board.boardState;
-    gameData.currentQuestion.isOpen = false;
 
-    await saveGameState();
-    io.emit("gameState", gameData);
 
-    console.log("Server: Board geladen:", board.name);
-  });
+
 
   socket.on("uploadBoardJSON", async json => {
     gameData.boardState = createBoardFromJSON(json);
@@ -247,23 +245,13 @@ app.get("/player", (_, res) =>
    START SERVER
 =========================== */
 async function start() {
-  console.log("Server: Verbinde mit MongoDB...");
-
-  const client = new MongoClient(DB_PATH);
-  await client.connect();
-
-  db = client.db(DB_NAME);
-  GameState = db.collection("game_state");
-  Boards = db.collection("boards");
-
-  console.log("Server: MongoDB verbunden");
-
   await loadGameState();
 
   server.listen(PORT, () => {
     console.log(`Server läuft auf http://localhost:${PORT}`);
   });
 }
+
 
 start().catch(err => {
   console.error("❌ Server Start Fehler:", err);

@@ -149,6 +149,33 @@ function getPlayerLink(camId) {
     return `${window.location.origin}/player?player=${camId}`;
 }
 
+// --- Boards laden und anzeigen ---
+async function loadBoards() {
+    try {
+        const response = await fetch("/api/boards");
+        if (!response.ok) throw new Error("Fehler beim Abrufen der Boards.");
+
+        const boards = await response.json();
+        const boardsList = document.getElementById("boards");
+        boardsList.innerHTML = "";
+
+        boards.forEach(board => {
+            const li = document.createElement("li");
+            li.textContent = board.name;
+            li.onclick = () => {
+                socket.emit("uploadBoardJSON", board);
+                alert(`Board '${board.name}' wurde geladen.`);
+            };
+            boardsList.appendChild(li);
+        });
+    } catch (error) {
+        console.error(error);
+        alert("Fehler beim Laden der Boards.");
+    }
+}
+
+// Boards beim Laden der Seite abrufen
+loadBoards();
 
 // --- Socket Events ---
 socket.on("gameState", data => {

@@ -8,14 +8,46 @@
 </head>
 <body>
     <h1>Jeopardy Manager</h1>
-    <div id="upload-section">
-        <h2>Upload JSON Board</h2>
-        <input type="file" id="file-input" accept="application/json">
-        <button id="upload-button">Upload</button>
-    </div>
-    <div id="boards-list">
-        <h2>Uploaded Boards</h2>
-        <ul id="boards"></ul>
+    <div class="manager-wrapper">
+        <div id="upload-section" class="upload-section">
+            <h2>Upload JSON Board</h2>
+            <input type="file" id="file-input" accept="application/json">
+            <button id="upload-button">Upload</button>
+        </div>
+        <div id="boards-list" class="boards-list">
+            <h2>Uploaded Boards</h2>
+            <ul id="boards"></ul>
+        </div>
+        <div id="questionBox" class="question-overlay hidden">
+            <h3 id="qCategory"></h3>
+            <h4 id="qPoints"></h4>
+            <p id="qText"></p>
+            <p id="qAnswer"></p>
+        </div>
+        <div id="board-details">
+            <h2>Board Details</h2>
+            <button id="create-blank-board">Leeres Board erstellen</button>
+            <div id="board-editor" style="display: none;">
+                <h3>Frage bearbeiten</h3>
+                <label for="category-select">Kategorie:</label>
+                <select id="category-select"></select>
+
+                <label for="points-select">Punkte:</label>
+                <select id="points-select"></select>
+
+                <label for="question-input">Frage:</label>
+                <textarea id="question-input"></textarea>
+
+                <label for="answer-input">Antwort:</label>
+                <textarea id="answer-input"></textarea>
+
+                <label for="media-input">Medien hinzufgen:</label>
+                <button id="add-music">Musik hinzufgen</button>
+                <button id="add-image">Bild hinzufgen</button>
+
+                <button id="save-question">Speichern</button>
+            </div>
+        </div>
     </div>
     <script src="src/manager.js"></script>
 </body>

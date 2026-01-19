@@ -18,10 +18,12 @@
             <button class="btn btn-danger" onclick="socket.emit('closeGame')">Game schließen</button>
         </div>
 
-        <div class="json-upload">
-            <h2>Board JSON</h2>
-            <input type="file" id="jsonFile" accept=".json">
-            <button class="btn" onclick="uploadJSON()">Upload</button>
+        <!-- Entfernt: JSON-Upload-Bereich -->
+
+        <!-- Hinzugefügt: Liste der Boards -->
+        <div class="boards-list">
+            <h2>Verfügbare Boards</h2>
+            <ul id="boards"></ul>
         </div>
     </div>
 

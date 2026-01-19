@@ -256,7 +256,15 @@ app.get("/manager", (_, res) =>
 // API-Endpunkt: Board hochladen
 app.post("/api/boards", (req, res) => {
     const { name, categories } = req.body;
+    console.log("Empfangene Daten:", req.body);
+
+    if (!name || typeof name !== "string" || name.trim() === "") {
+        console.error("Fehler: Das 'name'-Feld fehlt oder ist ungültig.");
+        return res.status(400).json({ error: "Das 'name'-Feld ist erforderlich und muss ein nicht-leerer String sein." });
+    }
+
     const categoriesString = JSON.stringify(categories);
+    console.log("SQL-Query:", `INSERT INTO boards (name, categories) VALUES ('${name}', '${categoriesString}')`);
 
     const query = `INSERT INTO boards (name, categories) VALUES (?, ?)`;
     db.run(query, [name, categoriesString], function (err) {
@@ -284,6 +292,40 @@ app.get("/api/boards", (req, res) => {
         res.status(200).json(boards);
     });
 });
+
+// API-Endpunkt: Board löschen (per Name)
+app.post("/api/boards/delete", (req, res) => {
+    const { name } = req.body;
+
+    console.log("Löschanfrage für Board:", name);
+
+    if (!name || typeof name !== "string" || name.trim() === "") {
+        return res.status(400).json({
+            error: "Das 'name'-Feld ist erforderlich und muss ein nicht-leerer String sein."
+        });
+    }
+
+    const query = `DELETE FROM boards WHERE name = ?`;
+
+    db.run(query, [name], function (err) {
+        if (err) {
+            console.error("Fehler beim Löschen des Boards:", err.message);
+            return res.status(500).json({ error: "Fehler beim Löschen des Boards" });
+        }
+
+        if (this.changes === 0) {
+            return res.status(404).json({
+                error: `Kein Board mit dem Namen '${name}' gefunden.`
+            });
+        }
+
+        console.log(`Board '${name}' erfolgreich gelöscht.`);
+        res.status(200).json({
+            message: `Board '${name}' erfolgreich gelöscht.`
+        });
+    });
+});
+
 
 server.listen(PORT, () =>
     console.log(`Server läuft auf http://localhost:${PORT}`)

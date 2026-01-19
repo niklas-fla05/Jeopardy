@@ -1,22 +1,16 @@
 const Database = require("better-sqlite3");
 const path = require("path");
 
-const dbPath = path.join("/data/db", "jeopardy.sqlite");
-let db;
+// Path to your database file
+const dbPath = path.join(__dirname, "game.db");
 
-function connectToDatabase() {
-  if (!db) {
-    const dbPath = path.join(__dirname, "game.db");
-    db = new Database(dbPath);
-    console.log("Database connected:", dbPath);
-  }
-  return db;
-}
+// Create a singleton DB instance
+const db = new Database(dbPath);
 
-// Tabellen erstellen, falls sie nicht existieren
+// Initialize tables if needed
 db.prepare(`
   CREATE TABLE IF NOT EXISTS game_state (
-    id INTEGER PRIMARY KEY CHECK (id = 1),
+    id INTEGER PRIMARY KEY,
     data TEXT
   )
 `).run();
@@ -28,4 +22,6 @@ db.prepare(`
   )
 `).run();
 
-module.exports = connectToDatabase();
+console.log("Database initialized at", dbPath);
+
+module.exports = db;

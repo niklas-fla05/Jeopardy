@@ -70,6 +70,27 @@ function createBoardFromJSON(json) {
   return board;
 }
 
+function createDummyBoard() {
+  const categories = ["A", "B", "C", "D", "E"];
+  const board = [];
+
+  for (const cat of categories) {
+    const col = [];
+    for (let points = 100; points <= 500; points += 100) {
+      col.push({
+        category: cat,
+        points: points,
+        question: "Dummy Frage",
+        answer: "Dummy Antwort",
+        status: "available"
+      });
+    }
+    board.push(col);
+  }
+
+  return board;
+}
+
 async function loadGameState() {
   const row = db.prepare("SELECT data FROM game_state WHERE id = 1").get();
 

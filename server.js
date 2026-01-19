@@ -70,10 +70,6 @@ function createBoardFromJSON(json) {
   return board;
 }
 
-function createDummyBoard() {
-  return createBoardFromJSON(require("./public/example-board.json"));
-}
-
 async function loadGameState() {
   const row = db.prepare("SELECT data FROM game_state WHERE id = 1").get();
 

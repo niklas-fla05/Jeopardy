@@ -186,6 +186,25 @@ socket.on("hostAnswer", ({ correct, question }) => {
     if (question) openQuestion(question);
 });
 
+socket.emit("getBoards");
+
+socket.on("boardsList", boards => {
+  const ul = document.getElementById("boardList");
+  ul.innerHTML = "";
+  boards.forEach(b => {
+    const li = document.createElement("li");
+    li.textContent = b.name;
+    li.onclick = () => socket.emit("loadBoard", { id: b.id });
+    ul.appendChild(li);
+  });
+});
+
+function saveCurrentBoard() {
+  const name = document.getElementById("boardName").value;
+  socket.emit("saveBoard", { name, json: exportCurrentBoardJSON() });
+}
+
+
 socket.emit("requestGameState");
 
 document.addEventListener("DOMContentLoaded", () => {

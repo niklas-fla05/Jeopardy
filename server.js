@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const http = require("http");
 const { Server } = require("socket.io");
+const sqlite3 = require("sqlite3").verbose();
 
 const app = express();
 const server = http.createServer(app);
@@ -10,6 +11,25 @@ const io = new Server(server);
 
 const PORT = 3000;
 const DATA_FILE = path.join(__dirname, "gameData.json");
+
+// SQLite-Datenbank einrichten
+const DB_PATH = path.join(__dirname, "data", "jeopardy.db");
+const db = new sqlite3.Database(DB_PATH, (err) => {
+    if (err) {
+        console.error("Fehler beim Verbinden mit SQLite:", err.message);
+    } else {
+        console.log("Mit SQLite-Datenbank verbunden.");
+        db.run(`CREATE TABLE IF NOT EXISTS boards (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            categories TEXT NOT NULL
+        )`, (err) => {
+            if (err) {
+                console.error("Fehler beim Erstellen der Tabelle:", err.message);
+            }
+        });
+    }
+});
 
 let buzzerLocked = false;
 let buzzedCam = null;
@@ -228,6 +248,42 @@ app.get("/screen", (_, res) =>
 app.get("/player", (_, res) =>
     res.sendFile(path.join(__dirname, "public/player.html"))
 );
+
+app.get("/manager", (_, res) =>
+    res.sendFile(path.join(__dirname, "public/manager.html"))
+);
+
+// API-Endpunkt: Board hochladen
+app.post("/api/boards", (req, res) => {
+    const { name, categories } = req.body;
+    const categoriesString = JSON.stringify(categories);
+
+    const query = `INSERT INTO boards (name, categories) VALUES (?, ?)`;
+    db.run(query, [name, categoriesString], function (err) {
+        if (err) {
+            console.error("Fehler beim Speichern des Boards:", err.message);
+            return res.status(500).json({ error: "Fehler beim Speichern des Boards" });
+        }
+        res.status(201).json({ message: "Board erfolgreich gespeichert", id: this.lastID });
+    });
+});
+
+// API-Endpunkt: Alle Boards abrufen
+app.get("/api/boards", (req, res) => {
+    const query = `SELECT * FROM boards`;
+    db.all(query, [], (err, rows) => {
+        if (err) {
+            console.error("Fehler beim Abrufen der Boards:", err.message);
+            return res.status(500).json({ error: "Fehler beim Abrufen der Boards" });
+        }
+        const boards = rows.map(row => ({
+            id: row.id,
+            name: row.name,
+            categories: JSON.parse(row.categories)
+        }));
+        res.status(200).json(boards);
+    });
+});
 
 server.listen(PORT, () =>
     console.log(`Server läuft auf http://localhost:${PORT}`)

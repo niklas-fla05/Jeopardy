@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeopardy Manager</title>
+    <link rel="stylesheet" href="assets/manager.css">
+</head>
+<body>
+    <h1>Jeopardy Manager</h1>
+    <div id="upload-section">
+        <h2>Upload JSON Board</h2>
+        <input type="file" id="file-input" accept="application/json">
+        <button id="upload-button">Upload</button>
+    </div>
+    <div id="boards-list">
+        <h2>Uploaded Boards</h2>
+        <ul id="boards"></ul>
+    </div>
+    <script src="src/manager.js"></script>
+</body>
+</html>

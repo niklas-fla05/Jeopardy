@@ -270,7 +270,7 @@ app.get("/player", (_, res) =>
 async function start() {
   await loadGameState();
 
-  server.listen(PORT, () => {
+  server.listen(PORT,"0.0.0.0",() => {
     console.log(`Server läuft auf http://localhost:${PORT}`);
   });
 }

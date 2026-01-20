@@ -41,9 +41,18 @@
                 <label for="answer-input">Antwort:</label>
                 <textarea id="answer-input"></textarea>
 
-                <label for="media-input">Medien hinzufgen:</label>
-                <button id="add-music">Musik hinzufgen</button>
-                <button id="add-image">Bild hinzufgen</button>
+                <label for="media-input">Medien hinzufügen:</label>
+
+                <label for="spotify-input" style="display:block;margin-top:6px;">Spotify-Link (Musik):</label>
+                <input
+                    type="url"
+                    id="spotify-input"
+                    placeholder="https://open.spotify.com/track/..."
+                    style="width:100%;margin-bottom:8px;"
+                />
+
+                <button id="add-image">Bild hinzufügen</button>
+
 
                 <button id="save-question">Speichern</button>
             </div>

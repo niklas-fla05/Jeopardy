@@ -4,6 +4,8 @@ const path = require("path");
 const http = require("http");
 const { Server } = require("socket.io");
 const sqlite3 = require("sqlite3").verbose();
+const multer = require("multer");
+
 
 const app = express();
 const server = http.createServer(app);
@@ -11,6 +13,16 @@ const io = new Server(server);
 
 const PORT = 3000;
 const DATA_FILE = path.join(__dirname, "gameData.json");
+const UPLOAD_PATH = path.join(__dirname, "data", "uploads");
+
+const upload = multer({ dest: path.join(__dirname, 'data', 'uploads') });
+
+// MEDIA STORAGE (ADD ONLY)
+const MEDIA_DIR = path.join(__dirname, "data", "db");
+
+if (!fs.existsSync(MEDIA_DIR)) fs.mkdirSync(MEDIA_DIR, { recursive: true });
+if (!fs.existsSync(UPLOAD_PATH)) fs.mkdirSync(UPLOAD_PATH, { recursive: true });
+
 
 // SQLite-Datenbank einrichten
 const DB_PATH = path.join(__dirname, "data", "jeopardy.db");
@@ -19,6 +31,7 @@ const db = new sqlite3.Database(DB_PATH, (err) => {
         console.error("Fehler beim Verbinden mit SQLite:", err.message);
     } else {
         console.log("Mit SQLite-Datenbank verbunden.");
+
         db.run(`CREATE TABLE IF NOT EXISTS boards (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
@@ -28,11 +41,23 @@ const db = new sqlite3.Database(DB_PATH, (err) => {
                 console.error("Fehler beim Erstellen der Tabelle:", err.message);
             }
         });
+
+        db.run(`CREATE UNIQUE INDEX IF NOT EXISTS idx_boards_name ON boards(name)`);
     }
 });
 
 let buzzerLocked = false;
 let buzzedCam = null;
+
+// MULTER UPLOAD (ADD ONLY)
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, UPLOAD_PATH),
+    filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname);
+        const name = `${Date.now()}${ext}`;
+        cb(null, name);
+    }
+});
 
 
 function createBoardFromJSON(json) {
@@ -45,6 +70,7 @@ function createBoardFromJSON(json) {
                 points: q.points,
                 question: q.question,
                 answer: q.answer,
+                spotifyUrl: q.spotifyUrl || null, // 🔹 ADD ONLY
                 status: "available"
             });
         });
@@ -52,6 +78,7 @@ function createBoardFromJSON(json) {
     });
     return board;
 }
+
 
 function createDummyBoard() {
     return createBoardFromJSON(require("./public/example-board.json"));
@@ -253,6 +280,41 @@ app.get("/manager", (_, res) =>
     res.sendFile(path.join(__dirname, "public/manager.html"))
 );
 
+// MEDIA STATIC (ADD ONLY)
+app.use("/data/db", express.static(MEDIA_DIR));
+app.use("/data/uploads", express.static(path.join(__dirname, "data/uploads")));
+// Macht den Upload-Ordner öffentlich zugänglich
+app.use('/uploads', express.static(path.join(__dirname, 'data', 'uploads')));
+
+
+
+
+
+// MEDIA UPLOAD API (ADD ONLY)
+app.post("/api/media/upload", upload.single("file"), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ error: "Keine Datei hochgeladen" });
+    }
+
+    res.json({
+        path: `/data/db/${req.file.filename}`
+    });
+});
+
+app.post("/api/upload/image", upload.single("image"), (req, res) => {
+    if (!req.file) return res.status(400).json({ error: "Keine Datei hochgeladen" });
+    const fileUrl = `/data/uploads/${req.file.filename}`;
+    res.json({ url: fileUrl });
+});
+
+app.post("/api/upload-image", upload.single("file"), (req, res) => {
+    if (!req.file) return res.status(400).json({ success: false, error: "Keine Datei" });
+
+    // Den öffentlich zugänglichen Pfad zurückgeben
+    const publicPath = `/uploads/${req.file.filename}`;
+    res.json({ success: true, url: publicPath });
+});
+
 // API-Endpunkt: Board hochladen
 app.post("/api/boards", (req, res) => {
     const { name, categories } = req.body;
@@ -266,7 +328,7 @@ app.post("/api/boards", (req, res) => {
     const categoriesString = JSON.stringify(categories);
     console.log("SQL-Query:", `INSERT INTO boards (name, categories) VALUES ('${name}', '${categoriesString}')`);
 
-    const query = `INSERT INTO boards (name, categories) VALUES (?, ?)`;
+    const query = `INSERT OR REPLACE INTO boards (name, categories) VALUES (?, ?)`;
     db.run(query, [name, categoriesString], function (err) {
         if (err) {
             console.error("Fehler beim Speichern des Boards:", err.message);

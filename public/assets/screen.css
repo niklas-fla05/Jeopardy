@@ -225,3 +225,16 @@ body {
         0 0 20px rgba(255, 0, 0, 0.9),
         0 0 40px rgba(255, 0, 0, 0.6);
 }
+
+.media-container img {
+    max-width: 80%;
+    max-height: 400px;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: 2px solid #ff7a18;
+}
+
+.media-container audio {
+    margin-top: 10px;
+    width: 80%;
+}

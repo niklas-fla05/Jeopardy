@@ -298,29 +298,29 @@ function displayBoard(board) {
             label.style.minWidth = "70px";
             mediaRow.appendChild(label);
             // Musik
-            if (q.music) {
-                const audio = document.createElement("audio");
-                audio.controls = true;
-                audio.src = q.music;
-                mediaRow.appendChild(audio);
+            // Spotify
+            if (q.spotify) {
+                const link = document.createElement("a");
+                link.href = q.spotify;
+                link.textContent = "Spotify öffnen";
+                link.target = "_blank";
+                link.style.color = "#1DB954";
+                link.style.fontWeight = "bold";
+                mediaRow.appendChild(link);
             }
-            const musicInput = document.createElement("input");
-            musicInput.type = "file";
-            musicInput.accept = "audio/*";
-            musicInput.style.fontSize = "0.9em";
-            musicInput.onchange = (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (evt) => {
-                        q.music = evt.target.result;
-                        displayBoard(board);
-                        mediaDiv.style.display = "block";
-                    };
-                    reader.readAsDataURL(file);
-                }
+
+            const spotifyInput = document.createElement("input");
+            spotifyInput.type = "url";
+            spotifyInput.placeholder = "Spotify-Link";
+            spotifyInput.style.fontSize = "0.9em";
+            spotifyInput.style.width = "220px";
+            spotifyInput.value = q.spotify || "";
+            spotifyInput.onchange = () => {
+                q.spotify = spotifyInput.value.trim();
             };
-            mediaRow.appendChild(musicInput);
+
+            mediaRow.appendChild(spotifyInput);
+
             // Bild
             if (q.image) {
                 const img = document.createElement("img");
@@ -335,18 +335,38 @@ function displayBoard(board) {
             imageInput.type = "file";
             imageInput.accept = "image/*";
             imageInput.style.fontSize = "0.9em";
-            imageInput.onchange = (e) => {
+            imageInput.onchange = async (e) => {
                 const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (evt) => {
-                        q.image = evt.target.result;
-                        displayBoard(board);
-                        mediaDiv.style.display = "block";
-                    };
-                    reader.readAsDataURL(file);
+                if (!file) return;
+
+                const formData = new FormData();
+                formData.append("file", file);
+
+                try {
+                    const res = await fetch("/api/upload-image", {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    const data = await res.json();
+
+                if (data.success && data.url) {
+            
+                    q.image = data.url;
+                    console.log("Bild verlinkt im Board:", q.image);
+
+            
+                    displayBoard(board);
+                    mediaDiv.style.display = "block";
+                } else {
+                    alert("Fehler beim Hochladen des Bildes.");
+                }
+                } catch (err) {
+                     console.error("Upload-Fehler:", err);
+                    alert("Fehler beim Hochladen des Bildes.");
                 }
             };
+
             mediaRow.appendChild(imageInput);
             mediaDiv.appendChild(mediaRow);
         });

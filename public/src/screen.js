@@ -58,7 +58,26 @@ function showQuestion(q) {
     qAnswer.textContent = q.answer;
     qAnswer.classList.add("hidden");
     boardContainer.classList.add("blurred");
+
+    // Bild anzeigen, falls vorhanden
+    const existingImg = document.getElementById("qImage");
+    if (existingImg) existingImg.remove();
+
+    if (q.image) {
+        const img = document.createElement("img");
+        img.id = "qImage";
+        img.src = q.image;
+        img.style.maxWidth = "50%";
+        img.style.maxHeight = "400px";
+        overlay.querySelector(".question-box").appendChild(img);
+        console.log("Bild für Frage angezeigt:", q.image);
+    } else {
+        console.log("Kein Bild für diese Frage.");
+    }
 }
+
+
+
 
 function closeQuestion() {
     overlay.classList.add("hidden");
@@ -123,6 +142,8 @@ socket.on("screenRevealAnswer", data => {
     qAnswer.classList.remove("hidden");
     overlay.classList.remove("hidden");
     boardContainer.classList.add("blurred");
+    showQuestion(data.question); // jetzt inklusive Bild + Spotify
+    qAnswer.classList.remove("hidden");
 });
 
 socket.emit("requestGameState");

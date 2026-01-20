@@ -133,4 +133,8 @@ dist
 .pnp.*
 
 data/jeopardy.db
-/data
+/data/
+
+# SQLite DB
+/data/jeopardy.db
+/data/uploads/

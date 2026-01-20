@@ -28,6 +28,9 @@ const db = new sqlite3.Database(DB_PATH, (err) => {
                 console.error("Fehler beim Erstellen der Tabelle:", err.message);
             }
         });
+        // ENSURE UNIQUE BOARD NAME (ADD ONLY)
+        db.run(`CREATE UNIQUE INDEX IF NOT EXISTS idx_boards_name ON boards(name)`);
+
     }
 });
 
@@ -266,7 +269,8 @@ app.post("/api/boards", (req, res) => {
     const categoriesString = JSON.stringify(categories);
     console.log("SQL-Query:", `INSERT INTO boards (name, categories) VALUES ('${name}', '${categoriesString}')`);
 
-    const query = `INSERT INTO boards (name, categories) VALUES (?, ?)`;
+    const query = `INSERT OR REPLACE INTO boards (name, categories) VALUES (?, ?)`;
+
     db.run(query, [name, categoriesString], function (err) {
         if (err) {
             console.error("Fehler beim Speichern des Boards:", err.message);

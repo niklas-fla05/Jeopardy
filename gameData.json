@@ -24,195 +24,195 @@
   "boardState": [
     [
       {
-        "category": "Anime",
+        "category": "Geschichte",
         "points": 100,
-        "question": "Wer ist der Hauptcharakter in „Naruto“?",
-        "answer": "Naruto Uzumaki",
-        "status": "available"
-      },
-      {
-        "category": "Anime",
-        "points": 200,
-        "question": "In welchem Anime kämpft ein Junge gegen Riesen?",
-        "answer": "Attack on Titan",
-        "status": "available"
-      },
-      {
-        "category": "Anime",
-        "points": 300,
-        "question": "Wie heißt der Entwickler von Sword Art Online, der das Death Game erschaffen hat?",
-        "answer": "Akihiko Kayaba",
-        "status": "available"
-      },
-      {
-        "category": "Anime",
-        "points": 400,
-        "question": "Wie heißt der Piratenkapitän mit dem Strohhut?",
-        "answer": "Monkey D. Luffy",
-        "status": "available"
-      },
-      {
-        "category": "Anime",
-        "points": 500,
-        "question": "Welcher Anime ist berühmt für den Satz „Ich werde dich töten… sobald ich erwachsen bin!“?",
-        "answer": "Fullmetal Alchemist",
-        "status": "available"
-      }
-    ],
-    [
-      {
-        "category": "Gaming",
-        "points": 100,
-        "question": "Was hat die Firma Nintendo ursprünglich hergestellt?",
-        "answer": "Spielkarten",
-        "status": "available"
-      },
-      {
-        "category": "Gaming",
-        "points": 200,
-        "question": "Was war das erste Videospiel der Welt?",
-        "answer": "Pong",
-        "status": "available"
-      },
-      {
-        "category": "Gaming",
-        "points": 300,
-        "question": "Wie viel kostet die Pistole ‚USP-S‘ in CS:GO?",
-        "answer": "200 Dollar",
-        "status": "available"
-      },
-      {
-        "category": "Gaming",
-        "points": 400,
-        "question": "In ‚The Legend of Zelda: Ocarina of Time‘ gibt es ein Item, das Link nur in einem bestimmten Minispiel bekommt und das ihn schneller laufen lässt. Wie heißt es?",
-        "answer": "Hover Boots",
-        "status": "available"
-      },
-      {
-        "category": "Gaming",
-        "points": 500,
-        "question": "Wie heißt die Frau des Kartenmachers in Hollow Knight.",
-        "answer": "Iselda",
-        "status": "available"
-      }
-    ],
-    [
-      {
-        "category": "Filme",
-        "points": 100,
-        "question": "Wie ist der Richtige Name des Superheldens, der im zweiten Weltkrieg gegen Hydra gekämpft hat?",
-        "answer": "Steve Rogers",
-        "status": "available"
-      },
-      {
-        "category": "Filme",
-        "points": 200,
-        "question": "Nenne alle Emotionen aus dem Film ‚Alles steht Kopf‘.",
-        "answer": "Freude, Trauer, Wut, Ekel, Angst",
-        "status": "available"
-      },
-      {
-        "category": "Filme",
-        "points": 300,
-        "question": "Wie heißen die 4 Robins von Batman?",
-        "answer": "Dick Grayson, Jason Todd, Tim Drake, Damian Wayne",
-        "status": "available"
-      },
-      {
-        "category": "Filme",
-        "points": 400,
-        "question": "nenne alle Mitglieder von Yoda's Lineage in ‚Star Wars‘.",
-        "answer": "Yoda, Count Dooku, Qui-Gon Jinn, Obi-Wan Kenobi, Anakin Skywalker, Ahsoka Tano, (Sabine Wren)",
-        "status": "available"
-      },
-      {
-        "category": "Filme",
-        "points": 500,
-        "question": "In ‚Der Herr der Ringe‘: Wie lautet der Name des Elben, der die Brücke von Khazad-dûm bewacht und Gandalf im Kampf gegen den Balrog hilft?",
-        "answer": "Gandalf selbst kämpft dort – aber der Elb wäre Glorfindel im Buch, im Film wird es nicht erwähnt",
-        "status": "available"
-      }
-    ],
-    [
-      {
-        "category": "Souls",
-        "points": 100,
-        "question": "In ‚Elden Ring‘: Wie lautet der vollständige Name der Hexe, die den Spieler auf seiner Reise durch das Tribunal unterstützt und eine der Hauptfiguren der Story ist?",
-        "answer": "Ranni, die Hexe",
-        "status": "available"
-      },
-      {
-        "category": "Souls",
-        "points": 200,
-        "question": "Welche Waffe in ‚Bloodborne‘ kann als Säbel und Gewehr zugleich verwendet werden und eignet sich besonders für schnelle Stagger-Angriffe?",
-        "answer": "Saw Cleaver",
-        "status": "available"
-      },
-      {
-        "category": "Souls",
-        "points": 300,
-        "question": "Welche Waffe in ‚Dark Souls‘ kann man nur erhalten, wenn man das Spiel mit einem bestimmten Covenant abschließt?",
-        "answer": "Dragonslayer Spear",
-        "status": "available"
-      },
-      {
-        "category": "Souls",
-        "points": 400,
-        "question": "In ‚Dark Souls‘: Wie heißt der NPC, der die Pyromantie-Lehren weitergibt und später in Chaosburg gefangen ist?",
-        "answer": "Laurentius von den Großen Feuer",
-        "status": "available"
-      },
-      {
-        "category": "Souls",
-        "points": 500,
-        "question": "Welcher Ritter fiel dem Abyss zum Opfer und wurde zur Legende von Oolacile",
-        "answer": "Artorias",
-        "status": "available"
-      }
-    ],
-    [
-      {
-        "category": "Algemeinwissen",
-        "points": 100,
-        "question": "Welche chemische Verbindung hat die Formel Dihydrogenmonoxid?",
-        "answer": "Wasser",
-        "status": "available"
-      },
-      {
-        "category": "Algemeinwissen",
-        "points": 200,
         "question": "In welchem Jahr begann die Französische Revolution?",
         "answer": "1789",
         "status": "available"
       },
       {
-        "category": "Algemeinwissen",
+        "category": "Geschichte",
+        "points": 200,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Geschichte",
         "points": 300,
-        "question": "Nenne alle Planeten unseres Sonnensystems in der richtigen Reihenfolge von der Sonne aus gesehen.",
-        "answer": "Mercur, Venus, Erde, Mars, Jupiter, Saturn, Uranus, Neptun",
+        "question": "",
+        "answer": "",
         "status": "available"
       },
       {
-        "category": "Algemeinwissen",
+        "category": "Geschichte",
         "points": 400,
-        "question": "Welches politische System teilt die Macht zwischen Bund und Ländern",
-        "answer": "Föderalismus",
+        "question": "",
+        "answer": "",
         "status": "available"
       },
       {
-        "category": "Algemeinwissen",
+        "category": "Geschichte",
         "points": 500,
-        "question": "Welches Element wurde nach dem Wohnort von Marie Curie benannt?",
-        "answer": "Polonium",
+        "question": "",
+        "answer": "",
+        "status": "available"
+      }
+    ],
+    [
+      {
+        "category": "Kategorie 2",
+        "points": 100,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Kategorie 2",
+        "points": 200,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Kategorie 2",
+        "points": 300,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Kategorie 2",
+        "points": 400,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Kategorie 2",
+        "points": 500,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      }
+    ],
+    [
+      {
+        "category": "Kategorie 3",
+        "points": 100,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Kategorie 3",
+        "points": 200,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Kategorie 3",
+        "points": 300,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Kategorie 3",
+        "points": 400,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Kategorie 3",
+        "points": 500,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      }
+    ],
+    [
+      {
+        "category": "Kategorie 4",
+        "points": 100,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Kategorie 4",
+        "points": 200,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Kategorie 4",
+        "points": 300,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Kategorie 4",
+        "points": 400,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Kategorie 4",
+        "points": 500,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      }
+    ],
+    [
+      {
+        "category": "Kategorie 5",
+        "points": 100,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Kategorie 5",
+        "points": 200,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Kategorie 5",
+        "points": 300,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Kategorie 5",
+        "points": 400,
+        "question": "",
+        "answer": "",
+        "status": "available"
+      },
+      {
+        "category": "Kategorie 5",
+        "points": 500,
+        "question": "",
+        "answer": "",
         "status": "available"
       }
     ]
   ],
   "currentQuestion": {
-    "category": "Souls",
-    "points": 200,
-    "question": "Welche Waffe in ‚Bloodborne‘ kann als Säbel und Gewehr zugleich verwendet werden und eignet sich besonders für schnelle Stagger-Angriffe?",
-    "answer": "Saw Cleaver",
+    "category": "Geschichte",
+    "points": 100,
+    "question": "In welchem Jahr begann die Französische Revolution?",
+    "answer": "1789",
     "status": "selected",
     "isOpen": true
   }

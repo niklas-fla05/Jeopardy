@@ -61,6 +61,7 @@ function createBoardFromJSON(json) {
 function createDummyBoard() {
     console.warn("⚠️ Dummy-Board deaktiviert (Production)");
     return [];
+    
 }
 
 

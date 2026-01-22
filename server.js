@@ -13,7 +13,7 @@ const PORT = 3000;
 const DATA_FILE = path.join(__dirname, "gameData.json");
 
 // SQLite-Datenbank einrichten
-const DB_PATH = path.join(__dirname, "data", "jeopardy.db");
+const DB_PATH = process.env.SQLITE_PATH || "/data/db/jeopardy.db";
 const db = new sqlite3.Database(DB_PATH, (err) => {
     if (err) {
         console.error("Fehler beim Verbinden mit SQLite:", err.message);
@@ -48,6 +48,8 @@ function createBoardFromJSON(json) {
                 points: q.points,
                 question: q.question,
                 answer: q.answer,
+                image: q.image || null,
+                spotify: q.spotify || null,
                 status: "available"
             });
         });
@@ -57,8 +59,10 @@ function createBoardFromJSON(json) {
 }
 
 function createDummyBoard() {
-    return createBoardFromJSON(require("./public/example-board.json"));
+    console.warn("⚠️ Dummy-Board deaktiviert (Production)");
+    return [];
 }
+
 
 const defaultPlayers = [
     { id: 1, name: "Player 1", score: 0 },
@@ -247,15 +251,20 @@ io.on("connection", socket => {
         db.run(
             "INSERT OR REPLACE INTO boards (name, categories) VALUES (?, ?)",
             ["JSON_UPLOAD", JSON.stringify(json.categories)],
-        () => {
-            loadBoardFromDB(() => { io.emit("gameState", gameData);});
+            err => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+
+                loadBoardFromDB(() => {
+                    gameData.currentQuestion.isOpen = false;
+                    saveGame();
+                    io.emit("gameState", gameData);
+                    console.log("✅ Board gespeichert & geladen");
+                });
             }
         );
-
-        gameData.currentQuestion.isOpen = false;
-        saveGame();
-        io.emit("gameState", gameData);
-        console.log("Server: Neues Board hochgeladen und gespeichert.");
     });
 });
 

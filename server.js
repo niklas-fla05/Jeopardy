@@ -259,26 +259,30 @@ app.get("/manager", (_, res) =>
 // API-Endpunkt: Board hochladen
 app.post("/api/boards", (req, res) => {
     const { name, categories } = req.body;
-    console.log("Empfangene Daten:", req.body);
-
-    if (!name || typeof name !== "string" || name.trim() === "") {
-        console.error("Fehler: Das 'name'-Feld fehlt oder ist ungültig.");
-        return res.status(400).json({ error: "Das 'name'-Feld ist erforderlich und muss ein nicht-leerer String sein." });
-    }
+    if (!name || !categories) return res.status(400).json({ error: "Name + Categories nötig" });
 
     const categoriesString = JSON.stringify(categories);
-    console.log("SQL-Query:", `INSERT INTO boards (name, categories) VALUES ('${name}', '${categoriesString}')`);
 
-    const query = `INSERT OR REPLACE INTO boards (name, categories) VALUES (?, ?)`;
+    // Prüfen ob Board existiert
+    db.get("SELECT id FROM boards WHERE name = ?", [name], (err, row) => {
+        if (err) return res.status(500).json({ error: "DB Fehler" });
 
-    db.run(query, [name, categoriesString], function (err) {
-        if (err) {
-            console.error("Fehler beim Speichern des Boards:", err.message);
-            return res.status(500).json({ error: "Fehler beim Speichern des Boards" });
+        if (row) {
+            // Update bestehendes Board
+            db.run("UPDATE boards SET categories = ? WHERE name = ?", [categoriesString, name], function(err) {
+                if (err) return res.status(500).json({ error: "Fehler beim Update" });
+                res.json({ message: "Board aktualisiert" });
+            });
+        } else {
+            // Neues Board anlegen
+            db.run("INSERT INTO boards (name, categories) VALUES (?, ?)", [name, categoriesString], function(err) {
+                if (err) return res.status(500).json({ error: "Fehler beim Speichern" });
+                res.status(201).json({ message: "Board gespeichert" });
+            });
         }
-        res.status(201).json({ message: "Board erfolgreich gespeichert", id: this.lastID });
     });
 });
+
 
 // API-Endpunkt: Alle Boards abrufen
 app.get("/api/boards", (req, res) => {

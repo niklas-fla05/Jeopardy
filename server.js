@@ -67,32 +67,45 @@ const defaultPlayers = [
     { id: 4, name: "Spieler 4", score: 0 }
 ];
 
+function loadBoardFromDB(callback) {
+    db.get(
+        "SELECT categories FROM boards ORDER BY id DESC LIMIT 1",
+        (err, row) => {
+            if (err) {
+                console.error("❌ Fehler beim Laden des Boards aus DB:", err);
+                return;
+            }
+
+            if (!row) {
+                console.warn("⚠️ Kein Board in DB – nutze Dummy");
+                gameData.boardState = createDummyBoard();
+            } else {
+                const categories = JSON.parse(row.categories);
+                gameData.boardState = createBoardFromJSON({ categories });
+                console.log("✅ Board aus DB geladen (neueste Version)");
+            }
+
+            if (callback) callback();
+        }
+    );
+}
+
+
 let gameData = {
     players: [...defaultPlayers],
     boardState: [],
     currentQuestion: { isOpen: false }
 };
 
+
+
 function saveGame() {
     fs.writeFileSync(DATA_FILE, JSON.stringify(gameData, null, 2));
 }
 
-if (fs.existsSync(DATA_FILE)) {
-    try {
-        const loaded = JSON.parse(fs.readFileSync(DATA_FILE));
-        gameData.players = loaded.players && loaded.players.length ? loaded.players : [...defaultPlayers];
-        gameData.boardState = loaded.boardState && loaded.boardState.length ? loaded.boardState : createDummyBoard();
-        console.log("Server: Spiel geladen aus gameData.json");
-    } catch (err) {
-        console.log("Server: Fehler beim Laden von gameData.json, erstelle neues Spiel.");
-        gameData.boardState = createDummyBoard();
-        saveGame();
-    }
-} else {
-    console.log("Server: gameData.json nicht gefunden, neues Spiel erstellt.");
-    gameData.boardState = createDummyBoard();
-    saveGame();
-}
+gameData.players = [...defaultPlayers];
+loadBoardFromDB();
+
 
 /* ---------- SOCKET ---------- */
 io.on("connection", socket => {
@@ -100,7 +113,9 @@ io.on("connection", socket => {
     socket.emit("gameState", gameData);
 
     socket.on("requestGameState", () => {
-        socket.emit("gameState", gameData);
+        loadBoardFromDB(() => {
+            socket.emit("gameState", gameData);
+        });
     });
 
     socket.on("updateScore", ({ playerId, delta }) => {
@@ -229,7 +244,14 @@ io.on("connection", socket => {
     });
 
     socket.on("uploadBoardJSON", json => {
-        gameData.boardState = createBoardFromJSON(json);
+        db.run(
+            "INSERT OR REPLACE INTO boards (name, categories) VALUES (?, ?)",
+            ["JSON_UPLOAD", JSON.stringify(json.categories)],
+        () => {
+            loadBoardFromDB(() => { io.emit("gameState", gameData);});
+            }
+        );
+
         gameData.currentQuestion.isOpen = false;
         saveGame();
         io.emit("gameState", gameData);

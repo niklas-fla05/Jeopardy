@@ -226,7 +226,7 @@ io.on("connection", socket => {
     });
 
     socket.on("registerPlayer", () => {
-        const freePlayer = players.find(p => !p.socketId);
+        const freePlayer = gameData.players.find(p => !p.socketId);
 
         if (!freePlayer) return;
 

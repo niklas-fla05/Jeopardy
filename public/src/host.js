@@ -68,10 +68,10 @@ function renderPlayerControls() {
             socket.emit("updateScore", { playerId: player.id, delta: 100 });
 
         const minusBtn = document.createElement("button");
-        minusBtn.textContent = "-100";
+        minusBtn.textContent = "-50";
         minusBtn.className = "btn-danger";
         minusBtn.onclick = () =>
-            socket.emit("updateScore", { playerId: player.id, delta: -100 });
+            socket.emit("updateScore", { playerId: player.id, delta: -50 });
 
         row.appendChild(nameInput);
         row.appendChild(scoreSpan);

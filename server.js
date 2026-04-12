@@ -10,13 +10,9 @@ const io = new Server(server);
 
 const PORT = process.env.PORT || 3000;
 
-/* ===========================
-   DATABASE SETUP (SQLite)
-=========================== */
 const dbPath = path.join(__dirname, "game.db");
 const db = new Database(dbPath);
 
-// Tabellen erstellen, falls sie nicht existieren
 db.prepare(`
   CREATE TABLE IF NOT EXISTS game_state (
     id INTEGER PRIMARY KEY,
@@ -33,9 +29,6 @@ db.prepare(`
 
 console.log("Database initialized at", dbPath);
 
-/* ===========================
-   DEFAULTS
-=========================== */
 const defaultPlayers = [
   { id: 1, name: "Player 1", score: 0 },
   { id: 2, name: "Player 2", score: 0 },
@@ -49,9 +42,6 @@ let gameData = {
   currentQuestion: { isOpen: false }
 };
 
-/* ===========================
-   HELPERS
-=========================== */
 function createBoardFromJSON(json) {
   const board = [];
   json.categories.forEach(cat => {
@@ -112,9 +102,6 @@ async function saveGameState() {
   `).run(data);
 }
 
-/* ===========================
-   SOCKET.IO
-=========================== */
 let buzzerLocked = false;
 let buzzerOwner = null;
 
@@ -187,9 +174,6 @@ io.on("connection", socket => {
     io.emit("gameState", gameData);
   });
 
-  /* ===========================
-     🔔 BUZZER
-  ============================ */
   socket.on("buzz", ({ camId, name }) => {
     if (buzzerLocked) return;
 
@@ -205,9 +189,6 @@ io.on("connection", socket => {
     io.emit("buzzerUnlocked");
   });
 
-  /* ===========================
-     🗂️ BOARD MANAGER
-  ============================ */
   socket.on("saveBoard", ({ name, json }) => {
     const boardState = createBoardFromJSON(json);
     db.prepare(`
@@ -246,9 +227,6 @@ io.on("connection", socket => {
   });
 });
 
-/* ===========================
-   EXPRESS
-=========================== */
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 
@@ -264,9 +242,6 @@ app.get("/player", (_, res) =>
   res.sendFile(path.join(__dirname, "public/player.html"))
 );
 
-/* ===========================
-   START SERVER
-=========================== */
 async function start() {
   await loadGameState();
 

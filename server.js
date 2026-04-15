@@ -251,6 +251,6 @@ async function start() {
 }
 
 start().catch(err => {
-  console.error("❌ Server Start Fehler:", err);
+  console.error("Start Fehler:", err);
   process.exit(1);
 });
